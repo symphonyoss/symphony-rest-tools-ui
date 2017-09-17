@@ -1,5 +1,8 @@
 # symphony-rest-tools-ui
 An Eclipse based UI for symphony-rest-tools
+
+This project has only just been started and there is not a lot of functionality yet, but I hope it will grow quickly. The idea is that this UI will expose all of the functionality of https://github.com/symphonyoss/symphony-rest-tools and more.
+
 ## Building
 Until we get to the point where we can do a release build you need to build the pre-requisits and install them into your local maven repo.
 
@@ -102,3 +105,8 @@ The zip files are distribution archives and there are exploded copies which you 
 
 On OSX if you navigate to products/org.symphonyoss.symphony.tools.rest.ui.product/target/products/srt/macosx/cocoa/x86_64/Eclipse.app in Finder and launch that app the UI should come up and look like this:
 
+![image](https://user-images.githubusercontent.com/14877967/30525963-93ea99d8-9bc6-11e7-99f6-b628e1fc2af5.png)
+
+Obviously there isn't a lot here yet, but try right clicking on the Pods view and then watch the Console view (you can type into this view to answer prompts)
+
+![image](https://user-images.githubusercontent.com/14877967/30525991-0e0ba996-9bc7-11e7-977e-1028625643be.png)
