@@ -25,34 +25,32 @@
 	
 	<modelVersion>4.0.0</modelVersion>
 
-	<!-- <parent>
-		<groupId>org.symphonyoss.s2</groupId>
-		<artifactId>S2-super-pom</artifactId>
-		<version>1.0.1-SNAPSHOT</version>
-	</parent> -->
+	<parent>
+		<groupId>org.symphonyoss.symphony.tools.rest</groupId>
+		<artifactId>symphony-rest-tools-ui</artifactId>
+		<version>1.0.0-SNAPSHOT</version>
+	</parent>
 
-	<groupId>org.symphonyoss.symphony.tools.rest</groupId>
-	<artifactId>symphony-rest-tools-ui</artifactId>
-	<version>1.0.0-SNAPSHOT</version>
+	<artifactId>bundles</artifactId>
 	<packaging>pom</packaging>
-
+	
+	<!-- Should not be needed START -->
 	<url>https://github.com/symphonyoss/symphony-rest-tools-ui</url>
-	<description>Symphony REST Tools UI</description>
-
-
+	<description>Container for Bundles</description>
+	
 	<licenses>
 		<license>
 			<name>Apache License, Version 2.0</name>
 			<url>https://www.apache.org/licenses/LICENSE-2.0.txt</url>
 		</license>
 	</licenses>
-
+	
 	<scm>
 		<connection>scm:git:git://github.com/symphonyoss/symphony-rest-tools-ui.git</connection>
 		<developerConnection>scm:git:git@github.com:symphonyoss/symphony-rest-tools-ui.git</developerConnection>
 		<url>https://github.com/symphonyoss/symphony-rest-tools-ui</url>
 	</scm>
-
+	
 	<developers>
 		<developer>
 			<id>bruceskingle</id>
@@ -66,71 +64,11 @@
 			</roles>
 		</developer>
 	</developers>
+	<!-- Should not be needed END -->
 	
 	<modules>
-		<module>bundles</module>
-		<module>features</module>
-		<module>products</module>
+		<module>org.symphonyoss.symphony.tools.rest.ui.dependencies</module>
+		<module>org.symphonyoss.symphony.tools.rest.ui</module>
+		<module>org.symphonyoss.symphony.tools.rest.ui.console</module>
 	</modules>
-	
-	<properties>
-		<tycho.version>1.0.0</tycho.version>
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<eclipse-repo.url>http://download.eclipse.org/releases/oxygen</eclipse-repo.url>
-	</properties>
-
-	<repositories>
-		<repository>
-			<id>eclipse</id>
-			<url>${eclipse-repo.url}</url>
-			<layout>p2</layout>
-		</repository>
-
-	</repositories>
-
-	<build>
-		<plugins>
-			<plugin>
-				<groupId>org.eclipse.tycho</groupId>
-				<artifactId>tycho-maven-plugin</artifactId>
-				<version>${tycho.version}</version>
-				<extensions>true</extensions>
-			</plugin>
-
-			<plugin>
-				<groupId>org.eclipse.tycho</groupId>
-				<artifactId>target-platform-configuration</artifactId>
-				<version>${tycho.version}</version>
-				<configuration>
-					<environments>
-						<environment>
-							<os>linux</os>
-							<ws>gtk</ws>
-							<arch>x86</arch>
-						</environment>
-						<environment>
-							<os>linux</os>
-							<ws>gtk</ws>
-							<arch>x86_64</arch>
-						</environment>
-						<environment>
-							<os>win32</os>
-							<ws>win32</ws>
-							<arch>x86</arch>
-						</environment>
-						<environment>
-							<os>win32</os>
-							<ws>win32</ws>
-							<arch>x86_64</arch>
-						</environment>
-						<environment>
-							<os>macosx</os>
-							<ws>cocoa</ws>
-							<arch>x86_64</arch>
-						</environment>
-					</environments>
-				</configuration>
-			</plugin>
-		</plugins>
-	</build>
 </project>
