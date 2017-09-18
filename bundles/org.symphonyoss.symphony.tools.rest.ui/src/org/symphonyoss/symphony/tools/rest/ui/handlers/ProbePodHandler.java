@@ -63,7 +63,7 @@ public class ProbePodHandler
       
       ISrtHome home = new SrtHome(null, null);
       
-      ProbePod  probePod = new ProbePod("qa4", home);
+      ProbePod  probePod = new ProbePod(null, home);
       
       probePod.setConsole(new Console(console.getIn(), console.getOut(), console.getErr()));
       

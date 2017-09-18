@@ -25,6 +25,11 @@
         <children xsi:type="menu:HandledMenuItem" xmi:id="_XFn_gJrwEee42oFXabHtOg" elementId="org.symphonyoss.symphony.tools.rest.ui.handledmenuitem.exit" label="Exit" command="_wmgOMJrvEee42oFXabHtOg"/>
       </children>
     </mainMenu>
+    <trimBars xmi:id="_zwCjkJwDEeeESYhIiBZbsg" elementId="org.symphonyoss.symphony.tools.rest.ui.trimbar.top">
+      <children xsi:type="menu:ToolBar" xmi:id="_51OZIJwDEeeESYhIiBZbsg" elementId="org.symphonyoss.symphony.tools.rest.ui.toolbar.0">
+        <children xsi:type="menu:HandledToolItem" xmi:id="_6zkQsJwDEeeESYhIiBZbsg" elementId="org.symphonyoss.symphony.tools.rest.ui.handledtoolitem.probe" label="Probe" iconURI="platform:/plugin/org.symphonyoss.symphony.tools.rest.ui/icons/etool16/search.gif" command="_4qDnYJsPEee42oFXabHtOg"/>
+      </children>
+    </trimBars>
   </children>
   <handlers xmi:id="_4okAIJrvEee42oFXabHtOg" elementId="org.symphonyoss.symphony.tools.rest.ui.handler.exit" contributionURI="bundleclass://org.symphonyoss.symphony.tools.rest.ui/org.symphonyoss.symphony.tools.rest.ui.handlers.ExitHandler" command="_wmgOMJrvEee42oFXabHtOg"/>
   <handlers xmi:id="_7qPa4JsPEee42oFXabHtOg" elementId="org.symphonyoss.symphony.tools.rest.ui.handler.probe" contributionURI="bundleclass://org.symphonyoss.symphony.tools.rest.ui/org.symphonyoss.symphony.tools.rest.ui.handlers.ProbePodHandler" command="_4qDnYJsPEee42oFXabHtOg"/>
