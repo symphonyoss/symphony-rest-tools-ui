@@ -29,7 +29,7 @@
 		<link>
 			<name>src</name>
 			<type>2</type>
-			<location>/Users/bruce.skingle/symphony/git/symphony-rest-tools/src/main/java</location>
+			<locationURI>PARENT-3-PROJECT_LOC/symphony-rest-tools/src/main/java</locationURI>
 		</link>
 	</linkedResources>
 </projectDescription>

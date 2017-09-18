@@ -35,7 +35,6 @@ import org.eclipse.jface.text.DocumentEvent;
 import org.eclipse.swt.widgets.Composite;
 import org.symphonyoss.symphony.tools.rest.ui.console.IConsole;
 import org.symphonyoss.symphony.tools.rest.ui.console.IConsoleManager;
-import org.symphonyoss.symphony.tools.rest.ui.console.impl.Console.ConsoleWriter;
 
 public class ConsoleManager implements IConsoleManager
 {

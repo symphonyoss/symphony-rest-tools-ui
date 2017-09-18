@@ -59,13 +59,12 @@ public class ProbePodHandler
     
     Job job = Job.create("Probe", (ICoreRunnable) monitor ->
     {
-      System.out.println("Probe!");
+      Console srtConsole = new Console(console.getIn(), console.getOut(), console.getErr());
       
-      ISrtHome home = new SrtHome(null, null);
+      ISrtHome home = new SrtHome(srtConsole, null, null);
       
-      ProbePod  probePod = new ProbePod(null, home);
-      
-      probePod.setConsole(new Console(console.getIn(), console.getOut(), console.getErr()));
+      ProbePod  probePod = new ProbePod(srtConsole,
+          null, home);
       
       try
       {
@@ -73,8 +72,7 @@ public class ProbePodHandler
       }
       catch (IOException e)
       {
-        // TODO Auto-generated catch block
-        e.printStackTrace();
+        e.printStackTrace(console.getErr());
       }
     });
     
