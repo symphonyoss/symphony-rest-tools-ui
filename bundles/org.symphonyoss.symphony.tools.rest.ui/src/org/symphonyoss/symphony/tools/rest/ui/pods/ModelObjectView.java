@@ -39,8 +39,12 @@ public class ModelObjectView
       
   private static final Bundle BUNDLE = FrameworkUtil.getBundle(ModelObjectView.class);
   
-  public static final ImageDescriptor IMAGE_SYMPHONY = obj("symphony");
-  public static final ImageDescriptor IMAGE_WEB = obj("web");
+  public static final ImageDescriptor IMAGE_SYMPHONY     = obj("symphony");
+  public static final ImageDescriptor IMAGE_WEB          = obj("web");
+  public static final ImageDescriptor IMAGE_KEY_MANAGER  = obj("key_manager");
+  public static final ImageDescriptor IMAGE_SESSION_AUTH = obj("session_auth");
+  public static final ImageDescriptor IMAGE_KEY_AUTH     = obj("key_auth");
+  public static final ImageDescriptor IMAGE_AGENT        = obj("agent");
   
   private static ImageDescriptor obj(String name)
   {

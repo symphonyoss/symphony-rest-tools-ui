@@ -34,18 +34,17 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.symphonyoss.symphony.tools.rest.model.IModelListener;
-import org.symphonyoss.symphony.tools.rest.model.IModelObject;
 import org.symphonyoss.symphony.tools.rest.model.IUrlEndpoint;
+import org.symphonyoss.symphony.tools.rest.model.IVirtualModelObject;
 import org.symphonyoss.symphony.tools.rest.ui.ModelObjectContentProvider;
 import org.symphonyoss.symphony.tools.rest.ui.ModelObjectImageAndLabelProvider;
 import org.symphonyoss.symphony.tools.rest.ui.ModelObjectLabelProvider;
-import org.symphonyoss.symphony.tools.rest.ui.console.IConsoleManager;
 import org.symphonyoss.symphony.tools.rest.util.home.ISrtHome;
 
 public class PodsView extends ModelObjectView
 {
-  @Inject
-  private IConsoleManager consoleManager_;
+//  @Inject
+//  private IConsoleManager consoleManager_;
   @Inject
   private ISrtHome        srtHome_;
   
@@ -65,16 +64,16 @@ public class PodsView extends ModelObjectView
     mainColumn.getColumn().setText("Name");
     mainColumn.getColumn().setWidth(300);
     mainColumn.setLabelProvider(
-            new ModelObjectImageAndLabelProvider<IModelObject>(display,
-                IModelObject.class,
+            new ModelObjectImageAndLabelProvider<IVirtualModelObject>(display,
+                IVirtualModelObject.class,
                 (o) -> o.getName()));
     
     TreeViewerColumn typeColumn = new TreeViewerColumn(viewer, SWT.NONE);
     typeColumn.getColumn().setText("Type");
     typeColumn.getColumn().setWidth(100);
     typeColumn.setLabelProvider(
-            new ModelObjectLabelProvider<IModelObject>(display,
-                IModelObject.class,
+            new ModelObjectLabelProvider<IVirtualModelObject>(display,
+                IVirtualModelObject.class,
                 (o) -> o.getTypeName()));
     
     TreeViewerColumn urlColumn = new TreeViewerColumn(viewer, SWT.NONE);
@@ -95,7 +94,7 @@ public class PodsView extends ModelObjectView
     {
       
       @Override
-      public void modelObjectChanged(IModelObject modelObject)
+      public void modelObjectChanged(IVirtualModelObject modelObject)
       {
         display.asyncExec(() -> viewer.refresh(modelObject));
       }

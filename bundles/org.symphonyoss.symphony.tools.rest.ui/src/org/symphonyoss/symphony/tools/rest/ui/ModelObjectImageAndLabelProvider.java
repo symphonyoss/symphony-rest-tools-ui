@@ -28,7 +28,9 @@ import org.eclipse.jface.resource.LocalResourceManager;
 import org.eclipse.jface.resource.ResourceManager;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Display;
-import org.symphonyoss.symphony.tools.rest.model.IModelObject;
+import org.symphonyoss.symphony.tools.rest.model.AgentConfig;
+import org.symphonyoss.symphony.tools.rest.model.IVirtualModelObject;
+import org.symphonyoss.symphony.tools.rest.model.Pod;
 import org.symphonyoss.symphony.tools.rest.model.PodConfig;
 import org.symphonyoss.symphony.tools.rest.ui.pods.ModelObjectView;
 
@@ -44,15 +46,27 @@ public class ModelObjectImageAndLabelProvider<M> extends ModelObjectLabelProvide
   @Override
   public Image getImage(Object element)
   {
-    if(element instanceof IModelObject)
+    if(element instanceof IVirtualModelObject)
     {
-      switch(((IModelObject)element).getTypeName())
+      switch(((IVirtualModelObject)element).getTypeName())
       {
         case PodConfig.TYPE_NAME:
           return resourceManager.createImage(ModelObjectView.IMAGE_SYMPHONY);
           
         case PodConfig.WEB_TYPE_NAME:
           return resourceManager.createImage(ModelObjectView.IMAGE_WEB);
+          
+        case Pod.TYPE_KEY_MANAGER:
+          return resourceManager.createImage(ModelObjectView.IMAGE_KEY_MANAGER);
+          
+        case Pod.TYPE_SESSION_AUTH:
+          return resourceManager.createImage(ModelObjectView.IMAGE_SESSION_AUTH);
+          
+        case Pod.TYPE_KEY_AUTH:
+          return resourceManager.createImage(ModelObjectView.IMAGE_KEY_AUTH);
+          
+        case AgentConfig.TYPE_NAME:
+          return resourceManager.createImage(ModelObjectView.IMAGE_AGENT);
       }
     }
   

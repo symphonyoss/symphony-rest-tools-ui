@@ -27,7 +27,7 @@ import org.eclipse.jface.viewers.ColumnLabelProvider;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.widgets.Display;
-import org.symphonyoss.symphony.tools.rest.model.IModelObject;
+import org.symphonyoss.symphony.tools.rest.model.IVirtualModelObject;
 
 public class ModelObjectLabelProvider<M> extends ColumnLabelProvider
 {
@@ -65,8 +65,8 @@ public class ModelObjectLabelProvider<M> extends ColumnLabelProvider
   @Override
   public Color getForeground(Object element)
   {
-    if(element instanceof IModelObject)
-      return ((IModelObject)element).getErrorText() == null ? null : 
+    if(element instanceof IVirtualModelObject)
+      return ((IVirtualModelObject)element).getErrorText() == null ? null : 
         display_.getSystemColor(SWT.COLOR_RED);
     
     return super.getForeground(element);
@@ -79,8 +79,8 @@ public class ModelObjectLabelProvider<M> extends ColumnLabelProvider
   @Override
   public String getToolTipText(Object element)
   {
-    if(element instanceof IModelObject)
-      return ((IModelObject)element).getErrorText();
+    if(element instanceof IVirtualModelObject)
+      return ((IVirtualModelObject)element).getErrorText();
     return null;
   }
 }
