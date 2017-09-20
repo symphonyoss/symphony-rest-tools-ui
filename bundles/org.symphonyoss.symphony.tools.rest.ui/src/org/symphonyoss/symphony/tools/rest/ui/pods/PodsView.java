@@ -33,6 +33,7 @@ import org.eclipse.jface.viewers.TreeViewerColumn;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
+import org.symphonyoss.symphony.tools.rest.model.IModelListener;
 import org.symphonyoss.symphony.tools.rest.model.IModelObject;
 import org.symphonyoss.symphony.tools.rest.model.IUrlEndpoint;
 import org.symphonyoss.symphony.tools.rest.ui.ModelObjectContentProvider;
@@ -89,5 +90,21 @@ public class PodsView extends ModelObjectView
     
     viewer.setInput(srtHome_);
     ColumnViewerToolTipSupport.enableFor(viewer);
+    
+    srtHome_.addListener(new IModelListener()
+    {
+      
+      @Override
+      public void modelObjectChanged(IModelObject modelObject)
+      {
+        display.asyncExec(() -> viewer.refresh(modelObject));
+      }
+      
+      @Override
+      public void modelChanged()
+      {
+        display.asyncExec(() -> viewer.refresh());
+      }
+    });
   }
 }

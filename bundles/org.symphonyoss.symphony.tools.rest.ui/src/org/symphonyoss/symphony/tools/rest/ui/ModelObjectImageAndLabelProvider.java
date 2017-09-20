@@ -50,6 +50,9 @@ public class ModelObjectImageAndLabelProvider<M> extends ModelObjectLabelProvide
       {
         case PodConfig.TYPE_NAME:
           return resourceManager.createImage(ModelObjectView.IMAGE_SYMPHONY);
+          
+        case PodConfig.WEB_TYPE_NAME:
+          return resourceManager.createImage(ModelObjectView.IMAGE_WEB);
       }
     }
   
