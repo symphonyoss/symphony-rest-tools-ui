@@ -36,6 +36,7 @@
   <commands xmi:id="_wmgOMJrvEee42oFXabHtOg" elementId="org.eclipse.ui.file.exit" commandName="Exit"/>
   <commands xmi:id="_4qDnYJsPEee42oFXabHtOg" elementId="org.symphonyoss.symphony.tools.rest.ui.command.probe" commandName="Probe"/>
   <addons xmi:id="_UIwugJssEee42oFXabHtOg" elementId="org.symphonyoss.symphony.tools.rest.ui.addon.console" contributionURI="bundleclass://org.symphonyoss.symphony.tools.rest.ui.console/org.symphonyoss.symphony.tools.rest.ui.console.ConsoleAddOn"/>
+  <addons xmi:id="__XteYJwQEeeESYhIiBZbsg" elementId="org.symphonyoss.symphony.tools.rest.ui.addon.home" contributionURI="bundleclass://org.symphonyoss.symphony.tools.rest.ui/org.symphonyoss.symphony.tools.rest.ui.addon.UiAddOn"/>
   <addons xmi:id="_Msm_4ZqFEee42oFXabHtOg" elementId="org.eclipse.e4.core.commands.service" contributionURI="bundleclass://org.eclipse.e4.core.commands/org.eclipse.e4.core.commands.CommandServiceAddon"/>
   <addons xmi:id="_Msm_4pqFEee42oFXabHtOg" elementId="org.eclipse.e4.ui.contexts.service" contributionURI="bundleclass://org.eclipse.e4.ui.services/org.eclipse.e4.ui.services.ContextServiceAddon"/>
   <addons xmi:id="_Msm_45qFEee42oFXabHtOg" elementId="org.eclipse.e4.ui.bindings.service" contributionURI="bundleclass://org.eclipse.e4.ui.bindings/org.eclipse.e4.ui.bindings.BindingServiceAddon"/>

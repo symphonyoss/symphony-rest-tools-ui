@@ -44,6 +44,8 @@ public class ProbePodHandler
 {
   @Inject
   private IConsoleManager consoleManager_;
+  @Inject
+  private ISrtHome        srtHome_;
   
   public ProbePodHandler()
   {
@@ -61,10 +63,8 @@ public class ProbePodHandler
     {
       Console srtConsole = new Console(console.getIn(), console.getOut(), console.getErr());
       
-      ISrtHome home = new SrtHome(srtConsole, null, null);
-      
       ProbePod  probePod = new ProbePod(srtConsole,
-          null, home);
+          null, srtHome_);
       
       try
       {

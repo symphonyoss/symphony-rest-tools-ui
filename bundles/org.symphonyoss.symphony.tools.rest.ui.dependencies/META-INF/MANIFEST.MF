@@ -9,7 +9,9 @@ Bundle-ClassPath: .,
  lib/jcurl-0.9.6.jar,
  lib/jsr305-3.0.2.jar,
  lib/symphony-rest-tools-0.1.1-SNAPSHOT.jar
-Export-Package: org.symphonyoss.symphony.tools.rest.probe,
+Export-Package: org.symphonyoss.symphony.jcurl,
+ org.symphonyoss.symphony.tools.rest.model,
+ org.symphonyoss.symphony.tools.rest.probe,
  org.symphonyoss.symphony.tools.rest.util,
  org.symphonyoss.symphony.tools.rest.util.home,
  org.symphonyoss.symphony.tools.rest.util.typeutils

@@ -24,23 +24,70 @@
 package org.symphonyoss.symphony.tools.rest.ui.pods;
 
 import javax.annotation.PostConstruct;
+import javax.inject.Inject;
 
 import org.eclipse.e4.ui.services.EMenuService;
+import org.eclipse.jface.viewers.ColumnViewerToolTipSupport;
 import org.eclipse.jface.viewers.TreeViewer;
+import org.eclipse.jface.viewers.TreeViewerColumn;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Display;
+import org.symphonyoss.symphony.tools.rest.model.IModelObject;
+import org.symphonyoss.symphony.tools.rest.model.IUrlEndpoint;
+import org.symphonyoss.symphony.tools.rest.ui.ModelObjectContentProvider;
+import org.symphonyoss.symphony.tools.rest.ui.ModelObjectImageAndLabelProvider;
+import org.symphonyoss.symphony.tools.rest.ui.ModelObjectLabelProvider;
+import org.symphonyoss.symphony.tools.rest.ui.console.IConsoleManager;
+import org.symphonyoss.symphony.tools.rest.util.home.ISrtHome;
 
-public class PodsView
+public class PodsView extends ModelObjectView
 {
+  @Inject
+  private IConsoleManager consoleManager_;
+  @Inject
+  private ISrtHome        srtHome_;
+  
   @PostConstruct
   public void createControls(Composite parent, EMenuService menuService)
   {
     // more code...
     TreeViewer viewer = new TreeViewer(parent, SWT.MULTI);
 
-    // more code
+    viewer.setContentProvider(new ModelObjectContentProvider());
+   
+    
+    viewer.getTree().setHeaderVisible(true);
+    Display display = viewer.getControl().getDisplay();
 
+    TreeViewerColumn mainColumn = new TreeViewerColumn(viewer, SWT.NONE);
+    mainColumn.getColumn().setText("Name");
+    mainColumn.getColumn().setWidth(300);
+    mainColumn.setLabelProvider(
+            new ModelObjectImageAndLabelProvider<IModelObject>(display,
+                IModelObject.class,
+                (o) -> o.getName()));
+    
+    TreeViewerColumn typeColumn = new TreeViewerColumn(viewer, SWT.NONE);
+    typeColumn.getColumn().setText("Type");
+    typeColumn.getColumn().setWidth(100);
+    typeColumn.setLabelProvider(
+            new ModelObjectLabelProvider<IModelObject>(display,
+                IModelObject.class,
+                (o) -> o.getTypeName()));
+    
+    TreeViewerColumn urlColumn = new TreeViewerColumn(viewer, SWT.NONE);
+    urlColumn.getColumn().setText("URL");
+    urlColumn.getColumn().setWidth(300);
+    urlColumn.setLabelProvider(
+            new ModelObjectLabelProvider<IUrlEndpoint>(display,
+                IUrlEndpoint.class,
+                (o) -> o.getUrl()));
+    
     // register context menu on the table
     menuService.registerContextMenu(viewer.getControl(), "org.symphonyoss.symphony.tools.rest.ui.popupmenu.pods");
+    
+    viewer.setInput(srtHome_);
+    ColumnViewerToolTipSupport.enableFor(viewer);
   }
 }

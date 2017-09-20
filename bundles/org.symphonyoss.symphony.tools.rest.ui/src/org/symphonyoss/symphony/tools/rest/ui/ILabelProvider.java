@@ -21,19 +21,10 @@
  * under the License.
  */
 
-package org.symphonyoss.symphony.tools.rest.ui.addon;
+package org.symphonyoss.symphony.tools.rest.ui;
 
-import javax.annotation.PostConstruct;
-
-import org.eclipse.e4.core.contexts.ContextInjectionFactory;
-import org.eclipse.e4.core.contexts.IEclipseContext;
-import org.symphonyoss.symphony.tools.rest.util.home.ISrtHome;
-
-public class UiAddOn
+@FunctionalInterface
+public interface ILabelProvider<M>
 {
-  @PostConstruct
-  public void createControls(IEclipseContext context)
-  {    
-    context.set(ISrtHome.class, ContextInjectionFactory.make(UiSrtHome.class, context));
-  }
+  Object getLabel(M modelObject);
 }

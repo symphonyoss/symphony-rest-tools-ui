@@ -23,17 +23,25 @@
 
 package org.symphonyoss.symphony.tools.rest.ui.addon;
 
-import javax.annotation.PostConstruct;
+import javax.inject.Inject;
 
-import org.eclipse.e4.core.contexts.ContextInjectionFactory;
-import org.eclipse.e4.core.contexts.IEclipseContext;
-import org.symphonyoss.symphony.tools.rest.util.home.ISrtHome;
+import org.symphonyoss.symphony.tools.rest.ui.console.IConsole;
+import org.symphonyoss.symphony.tools.rest.ui.console.IConsoleManager;
+import org.symphonyoss.symphony.tools.rest.util.Console;
+import org.symphonyoss.symphony.tools.rest.util.home.SrtHome;
 
-public class UiAddOn
+public class UiSrtHome extends SrtHome
 {
-  @PostConstruct
-  public void createControls(IEclipseContext context)
-  {    
-    context.set(ISrtHome.class, ContextInjectionFactory.make(UiSrtHome.class, context));
+  @Inject
+  public UiSrtHome(IConsoleManager consoleManager)
+  {
+    super(getConsole(consoleManager));
+  }
+
+  private static Console getConsole(IConsoleManager consoleManager)
+  {
+    IConsole iConsole = consoleManager.createConsole();
+    
+    return new Console(iConsole.getIn(), iConsole.getOut(), iConsole.getErr());
   }
 }
