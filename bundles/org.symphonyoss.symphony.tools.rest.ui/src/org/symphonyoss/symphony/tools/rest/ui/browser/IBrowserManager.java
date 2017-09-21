@@ -21,22 +21,13 @@
  * under the License.
  */
 
-package org.symphonyoss.symphony.tools.rest.ui.addon;
+package org.symphonyoss.symphony.tools.rest.ui.browser;
 
-import javax.annotation.PostConstruct;
+import java.net.URL;
 
-import org.eclipse.e4.core.contexts.ContextInjectionFactory;
-import org.eclipse.e4.core.contexts.IEclipseContext;
-import org.symphonyoss.symphony.tools.rest.ui.browser.BrowserManager;
-import org.symphonyoss.symphony.tools.rest.ui.browser.IBrowserManager;
-import org.symphonyoss.symphony.tools.rest.util.home.ISrtHome;
-
-public class UiAddOn
+public interface IBrowserManager
 {
-  @PostConstruct
-  public void createControls(IEclipseContext context)
-  {    
-    context.set(ISrtHome.class, ContextInjectionFactory.make(UiSrtHome.class, context));
-    context.set(IBrowserManager.class, ContextInjectionFactory.make(BrowserManager.class, context));
-  }
+
+  BrowserView createBrowser(URL url);
+
 }

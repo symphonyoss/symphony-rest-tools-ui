@@ -23,11 +23,21 @@
 
 package org.symphonyoss.symphony.tools.rest.ui.pods;
 
+import java.net.URL;
+import java.util.Iterator;
+
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 
 import org.eclipse.e4.ui.services.EMenuService;
+import org.eclipse.e4.ui.workbench.modeling.ESelectionService;
+import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.ColumnViewerToolTipSupport;
+import org.eclipse.jface.viewers.DoubleClickEvent;
+import org.eclipse.jface.viewers.IDoubleClickListener;
+import org.eclipse.jface.viewers.ISelectionChangedListener;
+import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.TreeViewerColumn;
 import org.eclipse.swt.SWT;
@@ -39,6 +49,7 @@ import org.symphonyoss.symphony.tools.rest.model.IVirtualModelObject;
 import org.symphonyoss.symphony.tools.rest.ui.ModelObjectContentProvider;
 import org.symphonyoss.symphony.tools.rest.ui.ModelObjectImageAndLabelProvider;
 import org.symphonyoss.symphony.tools.rest.ui.ModelObjectLabelProvider;
+import org.symphonyoss.symphony.tools.rest.ui.browser.IBrowserManager;
 import org.symphonyoss.symphony.tools.rest.util.home.ISrtHome;
 
 public class PodsView extends ModelObjectView
@@ -47,9 +58,11 @@ public class PodsView extends ModelObjectView
 //  private IConsoleManager consoleManager_;
   @Inject
   private ISrtHome        srtHome_;
+  @Inject
+  private IBrowserManager browserManager_;
   
   @PostConstruct
-  public void createControls(Composite parent, EMenuService menuService)
+  public void createControls(Composite parent, EMenuService menuService, ESelectionService selectionService)
   {
     // more code...
     TreeViewer viewer = new TreeViewer(parent, SWT.MULTI);
@@ -86,6 +99,45 @@ public class PodsView extends ModelObjectView
     
     // register context menu on the table
     menuService.registerContextMenu(viewer.getControl(), "org.symphonyoss.symphony.tools.rest.ui.popupmenu.pods");
+    
+    viewer.addDoubleClickListener(new IDoubleClickListener()
+    {
+      
+      @Override
+      public void doubleClick(DoubleClickEvent event)
+      {
+        final IStructuredSelection selection = (IStructuredSelection)event.getSelection();
+        if (selection == null || selection.isEmpty())
+          return;
+
+        Iterator<?> it = selection.iterator();
+        
+        while(it.hasNext())
+        {
+          Object obj = it.next();
+          
+          if(obj instanceof IUrlEndpoint)
+          {
+            URL url = ((IUrlEndpoint) obj).getUrl();
+            
+            if(url == null)
+              MessageDialog.openError(viewer.getControl().getShell(), "Not a URL", "The selected object does not have a valid URL");
+            else
+              browserManager_.createBrowser(url);
+          }
+        }
+      }
+    });
+    
+    viewer.addSelectionChangedListener(new ISelectionChangedListener()
+    {
+      @Override
+      public void selectionChanged(SelectionChangedEvent event)
+      {
+        IStructuredSelection selection = viewer.getStructuredSelection();
+        selectionService.setSelection(selection.getFirstElement());
+      }
+    });
     
     viewer.setInput(srtHome_);
     ColumnViewerToolTipSupport.enableFor(viewer);

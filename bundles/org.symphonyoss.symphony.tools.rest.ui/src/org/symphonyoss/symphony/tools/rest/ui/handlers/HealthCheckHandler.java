@@ -26,53 +26,61 @@ package org.symphonyoss.symphony.tools.rest.ui.handlers;
 import java.io.IOException;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 
 import org.eclipse.core.runtime.ICoreRunnable;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.e4.core.di.annotations.Execute;
+import org.eclipse.e4.core.di.annotations.Optional;
+import org.eclipse.e4.ui.services.IServiceConstants;
 import org.eclipse.e4.ui.workbench.IWorkbench;
+import org.symphonyoss.symphony.tools.rest.model.IPod;
+import org.symphonyoss.symphony.tools.rest.probe.CheckPod;
 import org.symphonyoss.symphony.tools.rest.probe.ProbePod;
 import org.symphonyoss.symphony.tools.rest.ui.console.IConsole;
 import org.symphonyoss.symphony.tools.rest.ui.console.IConsoleManager;
 import org.symphonyoss.symphony.tools.rest.util.Console;
 import org.symphonyoss.symphony.tools.rest.util.home.ISrtHome;
 
-public class ProbePodHandler
+public class HealthCheckHandler
 {
   @Inject
   private IConsoleManager consoleManager_;
   @Inject
   private ISrtHome        srtHome_;
   
-  public ProbePodHandler()
-  {
-    System.out.println("Construct ProbePodHandler");
-  }
-  
   @Execute
-  public void execute(IWorkbench workbench)
+  public void execute(IWorkbench workbench, @Named(IServiceConstants.ACTIVE_SELECTION)
+  @Optional Object selection)
   {
     final IConsole console = consoleManager_.createConsole();
     
-    console.getOut().println("Console Probe!");
+    console.getOut().println("HealthCheckHandler!");
     
-    Job job = Job.create("Probe", (ICoreRunnable) monitor ->
+    if (selection!=null && selection instanceof IPod)
     {
-      Console srtConsole = new Console(console.getIn(), console.getOut(), console.getErr());
+      String name = ((IPod)selection).getName();
       
-      ProbePod  probePod = new ProbePod(srtConsole,
-          null, srtHome_);
-      
-      try
-      {
-        probePod.run();
-      }
-      catch (RuntimeException e)
-      {
-        e.printStackTrace(console.getErr());
-      }
-    });
+      console.getOut().println("HealthCheck " + name);
     
-    job.schedule();
+      Job job = Job.create("HealthCheck " + name, (ICoreRunnable) monitor ->
+      {
+        Console srtConsole = new Console(console.getIn(), console.getOut(), console.getErr());
+        
+        CheckPod  probePod = new CheckPod(srtConsole,
+            name, srtHome_);
+        
+        try
+        {
+          probePod.run();
+        }
+        catch (RuntimeException e)
+        {
+          e.printStackTrace(console.getErr());
+        }
+      });
+      
+      job.schedule();
+    }
   }
 }
