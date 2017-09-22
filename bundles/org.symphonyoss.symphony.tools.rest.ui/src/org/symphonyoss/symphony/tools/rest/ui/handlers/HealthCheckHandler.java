@@ -23,8 +23,6 @@
 
 package org.symphonyoss.symphony.tools.rest.ui.handlers;
 
-import java.io.IOException;
-
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -36,7 +34,6 @@ import org.eclipse.e4.ui.services.IServiceConstants;
 import org.eclipse.e4.ui.workbench.IWorkbench;
 import org.symphonyoss.symphony.tools.rest.model.IPod;
 import org.symphonyoss.symphony.tools.rest.probe.CheckPod;
-import org.symphonyoss.symphony.tools.rest.probe.ProbePod;
 import org.symphonyoss.symphony.tools.rest.ui.console.IConsole;
 import org.symphonyoss.symphony.tools.rest.ui.console.IConsoleManager;
 import org.symphonyoss.symphony.tools.rest.util.Console;

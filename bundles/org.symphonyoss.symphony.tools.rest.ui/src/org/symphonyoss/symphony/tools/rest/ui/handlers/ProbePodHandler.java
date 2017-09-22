@@ -23,8 +23,6 @@
 
 package org.symphonyoss.symphony.tools.rest.ui.handlers;
 
-import java.io.IOException;
-
 import javax.inject.Inject;
 
 import org.eclipse.core.runtime.ICoreRunnable;

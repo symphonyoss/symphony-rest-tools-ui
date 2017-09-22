@@ -34,5 +34,6 @@
 	<artifactId>org.symphonyoss.symphony.tools.rest.ui.feature</artifactId>
 
   <packaging>eclipse-feature</packaging>
-
+  
+  
 </project>
