@@ -25,52 +25,25 @@ package org.symphonyoss.symphony.tools.rest.ui.handlers;
 
 import javax.inject.Inject;
 
-import org.eclipse.core.runtime.ICoreRunnable;
-import org.eclipse.core.runtime.jobs.Job;
-import org.eclipse.e4.core.di.annotations.Execute;
-import org.eclipse.e4.ui.workbench.IWorkbench;
+import org.symphonyoss.symphony.tools.rest.model.IPod;
 import org.symphonyoss.symphony.tools.rest.probe.ProbePod;
-import org.symphonyoss.symphony.tools.rest.ui.console.IConsole;
-import org.symphonyoss.symphony.tools.rest.ui.console.IConsoleManager;
 import org.symphonyoss.symphony.tools.rest.util.Console;
 import org.symphonyoss.symphony.tools.rest.util.home.ISrtHome;
 
-public class ProbePodHandler
+public class ProbePodHandler extends ConsoleSelectionHandler<IPod>
 {
-  @Inject
-  private IConsoleManager consoleManager_;
   @Inject
   private ISrtHome        srtHome_;
   
   public ProbePodHandler()
   {
-    System.out.println("Construct ProbePodHandler");
+    super("Probe Check", IPod.class, "Pod");
   }
-  
-  @Execute
-  public void execute(IWorkbench workbench)
+
+  @Override
+  protected void execute(IPod pod, Console srtConsole)
   {
-    final IConsole console = consoleManager_.createConsole();
-    
-    console.getOut().println("Console Probe!");
-    
-    Job job = Job.create("Probe", (ICoreRunnable) monitor ->
-    {
-      Console srtConsole = new Console(console.getIn(), console.getOut(), console.getErr());
-      
-      ProbePod  probePod = new ProbePod(srtConsole,
-          null, srtHome_);
-      
-      try
-      {
-        probePod.run();
-      }
-      catch (RuntimeException e)
-      {
-        e.printStackTrace(console.getErr());
-      }
-    });
-    
-    job.schedule();
+    new ProbePod(srtConsole,
+            pod.getName(), srtHome_).run();
   }
 }

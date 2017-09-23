@@ -34,13 +34,13 @@ import org.symphonyoss.symphony.tools.rest.model.Pod;
 import org.symphonyoss.symphony.tools.rest.model.PodConfig;
 import org.symphonyoss.symphony.tools.rest.ui.pods.ModelObjectView;
 
-public class ModelObjectImageAndLabelProvider<M> extends ModelObjectLabelProvider<M>
+public class ModelObjectTypeImageAndLabelProvider extends ModelObjectLabelProvider<IVirtualModelObject>
 {
   private final ResourceManager resourceManager = new LocalResourceManager(JFaceResources.getResources());
 
-  public ModelObjectImageAndLabelProvider(Display display, Class<M> type, ILabelProvider<M> labelProvider)
+  public ModelObjectTypeImageAndLabelProvider(Display display, ILabelProvider<IVirtualModelObject> labelProvider)
   {
-    super(display, type, labelProvider);
+    super(display, IVirtualModelObject.class, labelProvider);
   }
   
   @Override

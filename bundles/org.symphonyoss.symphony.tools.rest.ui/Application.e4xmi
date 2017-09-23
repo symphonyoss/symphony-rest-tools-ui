@@ -8,6 +8,7 @@
             <menus xsi:type="menu:PopupMenu" xmi:id="_ccvdEJsPEee42oFXabHtOg" elementId="org.symphonyoss.symphony.tools.rest.ui.popupmenu.pods" label="Pods">
               <children xsi:type="menu:HandledMenuItem" xmi:id="_lgnRUJsPEee42oFXabHtOg" elementId="org.symphonyoss.symphony.tools.rest.ui.handledmenuitem.probe" label="Probe" command="_4qDnYJsPEee42oFXabHtOg"/>
               <children xsi:type="menu:HandledMenuItem" xmi:id="_uDFSgJ5NEee_ZogvD_0JVw" elementId="org.symphonyoss.symphony.tools.rest.ui.handledmenuitem.healthCheck" label="Health Check" iconURI="platform:/plugin/org.symphonyoss.symphony.tools.rest.ui/icons/obj16/health_check.png" command="_VZS5UJ5NEee_ZogvD_0JVw"/>
+              <children xsi:type="menu:HandledMenuItem" xmi:id="_xa9TsKACEeeKSMg4A20k0A" elementId="org.symphonyoss.symphony.tools.rest.ui.handledmenuitem.login" label="Login" iconURI="platform:/plugin/org.symphonyoss.symphony.tools.rest.ui/icons/obj16/User.gif" command="_bczaUKACEeeKSMg4A20k0A"/>
             </menus>
           </children>
         </children>
@@ -35,9 +36,11 @@
   <handlers xmi:id="_4okAIJrvEee42oFXabHtOg" elementId="org.symphonyoss.symphony.tools.rest.ui.handler.exit" contributionURI="bundleclass://org.symphonyoss.symphony.tools.rest.ui/org.symphonyoss.symphony.tools.rest.ui.handlers.ExitHandler" command="_wmgOMJrvEee42oFXabHtOg"/>
   <handlers xmi:id="_7qPa4JsPEee42oFXabHtOg" elementId="org.symphonyoss.symphony.tools.rest.ui.handler.probe" contributionURI="bundleclass://org.symphonyoss.symphony.tools.rest.ui/org.symphonyoss.symphony.tools.rest.ui.handlers.ProbePodHandler" command="_4qDnYJsPEee42oFXabHtOg"/>
   <handlers xmi:id="_eEsjMJ5NEee_ZogvD_0JVw" elementId="org.symphonyoss.symphony.tools.rest.ui.handler.0" contributionURI="bundleclass://org.symphonyoss.symphony.tools.rest.ui/org.symphonyoss.symphony.tools.rest.ui.handlers.HealthCheckHandler" command="_VZS5UJ5NEee_ZogvD_0JVw"/>
+  <handlers xmi:id="_gcpYcKACEeeKSMg4A20k0A" elementId="org.symphonyoss.symphony.tools.rest.ui.handler.login" contributionURI="bundleclass://org.symphonyoss.symphony.tools.rest.ui/org.symphonyoss.symphony.tools.rest.ui.handlers.LoginHandler" command="_bczaUKACEeeKSMg4A20k0A"/>
   <commands xmi:id="_wmgOMJrvEee42oFXabHtOg" elementId="org.eclipse.ui.file.exit" commandName="Exit"/>
   <commands xmi:id="_4qDnYJsPEee42oFXabHtOg" elementId="org.symphonyoss.symphony.tools.rest.ui.command.probe" commandName="Probe"/>
   <commands xmi:id="_VZS5UJ5NEee_ZogvD_0JVw" elementId="org.symphonyoss.symphony.tools.rest.ui.command.healthCheck" commandName="Health Check" description="Ping the server to see if it is healthy"/>
+  <commands xmi:id="_bczaUKACEeeKSMg4A20k0A" elementId="org.symphonyoss.symphony.tools.rest.ui.command.login" commandName="Login"/>
   <addons xmi:id="_UIwugJssEee42oFXabHtOg" elementId="org.symphonyoss.symphony.tools.rest.ui.addon.console" contributionURI="bundleclass://org.symphonyoss.symphony.tools.rest.ui.console/org.symphonyoss.symphony.tools.rest.ui.console.ConsoleAddOn"/>
   <addons xmi:id="__XteYJwQEeeESYhIiBZbsg" elementId="org.symphonyoss.symphony.tools.rest.ui.addon.home" contributionURI="bundleclass://org.symphonyoss.symphony.tools.rest.ui/org.symphonyoss.symphony.tools.rest.ui.addon.UiAddOn"/>
   <addons xmi:id="_Msm_4ZqFEee42oFXabHtOg" elementId="org.eclipse.e4.core.commands.service" contributionURI="bundleclass://org.eclipse.e4.core.commands/org.eclipse.e4.core.commands.CommandServiceAddon"/>

@@ -30,20 +30,22 @@ import org.symphonyoss.symphony.tools.rest.probe.CheckPod;
 import org.symphonyoss.symphony.tools.rest.util.Console;
 import org.symphonyoss.symphony.tools.rest.util.home.ISrtHome;
 
-public class HealthCheckHandler extends ConsoleSelectionHandler<IPod>
+public class LoginHandler extends ConsoleSelectionHandler<IPod>
 {
   @Inject
   private ISrtHome        srtHome_;
   
-  public HealthCheckHandler()
+  public LoginHandler()
   {
-    super("Health Check", IPod.class, "Pod");
+    super("Login", IPod.class, "Pod");
   }
 
   @Override
   protected void execute(IPod pod, Console srtConsole)
   {
-    new CheckPod(srtConsole,
-            pod.getName(), srtHome_).run();
+    CheckPod  probePod = new CheckPod(srtConsole,
+            pod.getName(), srtHome_);
+        
+    probePod.run();
   }
 }

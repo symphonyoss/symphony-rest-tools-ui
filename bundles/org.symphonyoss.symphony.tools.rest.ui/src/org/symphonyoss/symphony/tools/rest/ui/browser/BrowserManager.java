@@ -52,7 +52,7 @@ public class BrowserManager implements IBrowserManager
   private EModelService modelService_;
   
   @Override
-  public BrowserView createBrowser(URL url)
+  public BrowserView createBrowser(URL url, String html)
   {
     MPart part = MBasicFactory.INSTANCE.createPart();
     
@@ -70,7 +70,7 @@ public class BrowserManager implements IBrowserManager
     {
       BrowserView view = (BrowserView)o;
       
-      view.setUrl(url);
+      view.setUrl(url, html);
       
       return view;
     }
