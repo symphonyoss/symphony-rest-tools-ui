@@ -25,6 +25,7 @@ package org.symphonyoss.symphony.tools.rest.ui.handlers;
 
 import javax.inject.Inject;
 
+import org.eclipse.swt.widgets.Shell;
 import org.symphonyoss.symphony.tools.rest.model.IPod;
 import org.symphonyoss.symphony.tools.rest.probe.CheckPod;
 import org.symphonyoss.symphony.tools.rest.util.Console;
@@ -41,7 +42,7 @@ public class HealthCheckHandler extends ConsoleSelectionHandler<IPod>
   }
 
   @Override
-  protected void execute(IPod pod, Console srtConsole)
+  protected void execute(Shell shell, IPod pod, Console srtConsole)
   {
     new CheckPod(srtConsole,
             pod.getName(), srtHome_).run();

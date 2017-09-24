@@ -45,6 +45,7 @@ public class ModelObjectView
   public static final ImageDescriptor IMAGE_SESSION_AUTH        = obj("session_auth");
   public static final ImageDescriptor IMAGE_KEY_AUTH            = obj("key_auth");
   public static final ImageDescriptor IMAGE_AGENT               = obj("agent");
+  public static final ImageDescriptor IMAGE_PRINCIPAL           = obj("User");
 
   public static final ImageDescriptor IMAGE_STATUS_ERROR        = obj("status/Error");
   public static final ImageDescriptor IMAGE_STATUS_FAILED       = obj("status/Failed");

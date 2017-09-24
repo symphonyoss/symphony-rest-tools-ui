@@ -32,6 +32,7 @@ import org.symphonyoss.symphony.tools.rest.model.AgentConfig;
 import org.symphonyoss.symphony.tools.rest.model.IVirtualModelObject;
 import org.symphonyoss.symphony.tools.rest.model.Pod;
 import org.symphonyoss.symphony.tools.rest.model.PodConfig;
+import org.symphonyoss.symphony.tools.rest.model.PrincipalConfig;
 import org.symphonyoss.symphony.tools.rest.ui.pods.ModelObjectView;
 
 public class ModelObjectTypeImageAndLabelProvider extends ModelObjectLabelProvider<IVirtualModelObject>
@@ -67,6 +68,9 @@ public class ModelObjectTypeImageAndLabelProvider extends ModelObjectLabelProvid
           
         case AgentConfig.TYPE_NAME:
           return resourceManager.createImage(ModelObjectView.IMAGE_AGENT);
+          
+        case PrincipalConfig.TYPE_NAME:
+          return resourceManager.createImage(ModelObjectView.IMAGE_PRINCIPAL);
       }
     }
   

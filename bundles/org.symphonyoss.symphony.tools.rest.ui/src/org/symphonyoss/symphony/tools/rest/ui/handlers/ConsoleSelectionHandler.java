@@ -25,6 +25,7 @@ package org.symphonyoss.symphony.tools.rest.ui.handlers;
 
 import javax.inject.Inject;
 
+import org.eclipse.swt.widgets.Shell;
 import org.symphonyoss.symphony.tools.rest.ui.console.IConsole;
 import org.symphonyoss.symphony.tools.rest.ui.console.IConsoleManager;
 import org.symphonyoss.symphony.tools.rest.util.Console;
@@ -40,7 +41,7 @@ public abstract class ConsoleSelectionHandler<T> extends SelectionHandler<T>
   }
 
   @Override
-  protected void execute(T selection)
+  protected void execute(Shell shell, T selection)
   {
     final IConsole console = consoleManager_.createConsole();
     final Console srtConsole = new Console(console.getIn(), console.getOut(), console.getErr());
@@ -49,7 +50,7 @@ public abstract class ConsoleSelectionHandler<T> extends SelectionHandler<T>
     
     try
     {
-      execute(selection, srtConsole);
+      execute(shell, selection, srtConsole);
       
       srtConsole.getOut().println(getCommandName() + "(" + selection + ") completed.");
     }
@@ -65,5 +66,5 @@ public abstract class ConsoleSelectionHandler<T> extends SelectionHandler<T>
     }
   }
 
-  protected abstract void execute(T selection, Console srtConsole);
+  protected abstract void execute(Shell shell, T selection, Console srtConsole);
 }

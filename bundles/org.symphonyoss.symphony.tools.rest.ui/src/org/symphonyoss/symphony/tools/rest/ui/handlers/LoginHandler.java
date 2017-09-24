@@ -23,10 +23,20 @@
 
 package org.symphonyoss.symphony.tools.rest.ui.handlers;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+
 import javax.inject.Inject;
 
+import org.eclipse.jface.dialogs.MessageDialog;
+import org.eclipse.swt.widgets.Shell;
+import org.symphonyoss.symphony.jcurl.JCurl;
 import org.symphonyoss.symphony.tools.rest.model.IPod;
-import org.symphonyoss.symphony.tools.rest.probe.CheckPod;
+import org.symphonyoss.symphony.tools.rest.ui.browser.IBrowserManager;
+import org.symphonyoss.symphony.tools.rest.ui.login.PodLoginDialog;
 import org.symphonyoss.symphony.tools.rest.util.Console;
 import org.symphonyoss.symphony.tools.rest.util.home.ISrtHome;
 
@@ -41,11 +51,58 @@ public class LoginHandler extends ConsoleSelectionHandler<IPod>
   }
 
   @Override
-  protected void execute(IPod pod, Console srtConsole)
+  protected void execute(Shell shell, IPod pod, Console console)
   {
-    CheckPod  probePod = new CheckPod(srtConsole,
-            pod.getName(), srtHome_);
+    URL url = pod.getUrl();
+    
+    try 
+    {
+      JCurl jCurl = JCurl.builder().build();
+      HttpURLConnection connection = jCurl.connect(url);
+      
+      
+  
+      if(connection.getResponseCode() != 200)
+      {
+        MessageDialog.openError(shell,
+            "Failed to connect",
+            "Error " + connection.getResponseCode()
+            );
+
+        return;
+      }
+      
+      try(
+          BufferedReader reader = new BufferedReader(
+              new InputStreamReader(
+                  connection.getInputStream())))
+      {
+        StringBuilder s = new StringBuilder();
+        String line;
         
-    probePod.run();
+        while((line = reader.readLine()) != null)
+        {
+          line = line.replaceAll("href=\"", "href=\"" + url + "/")
+              .replaceAll("<script src=\"app-", "<script src=\"" + url + "/app-")
+              .replaceAll("\"./browsers.html\"", "\"" + url + "/browsers.html\"")
+              .replaceAll("'/login'", "'" + url + "/login'")
+              .replaceAll("var chrome32 = \\(chromeVer >= 32\\);", "var chrome32 = true;")
+              ;
+          s.append(line);
+          s.append("\n");
+        }
+        
+        PodLoginDialog dialog = new PodLoginDialog(shell, pod, console, s.toString());
+        
+        shell.getDisplay().asyncExec(() -> dialog.open());
+      }
+    }
+    catch(IOException e)
+    {
+      shell.getDisplay().asyncExec(() -> MessageDialog.openError(shell,
+          "Failed to connect",
+          "Error " + e
+          ));
+    } 
   }
 }

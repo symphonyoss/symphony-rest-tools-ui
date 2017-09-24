@@ -70,7 +70,7 @@ public abstract class SelectionHandler<T>
   }
 
   @Execute
-  public void execute(Shell shell, @Named(IServiceConstants.ACTIVE_SELECTION)
+  public void doExecute(Shell shell, @Named(IServiceConstants.ACTIVE_SELECTION)
   @Optional Object selection)
   {
     
@@ -81,7 +81,7 @@ public abstract class SelectionHandler<T>
       {
         try
         {
-          execute((T) selection);
+          execute(shell, (T) selection);
         }
         catch (RuntimeException e)
         {
@@ -124,5 +124,5 @@ public abstract class SelectionHandler<T>
     return ms;
   }
 
-  protected abstract void execute(T selection);
+  protected abstract void execute(Shell shell, T selection);
 }

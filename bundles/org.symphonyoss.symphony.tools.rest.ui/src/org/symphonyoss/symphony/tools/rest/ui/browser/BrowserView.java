@@ -98,6 +98,9 @@ public class BrowserView
       public void changing(LocationEvent event)
       {
         System.err.println("Changing location " + event.location);
+        skey_ = Browser.getCookie("skey", url_.toString());
+        kmsession_ = Browser.getCookie("kmsession", url_.toString());
+        
         System.err.println("skey=" + skey_);
         System.err.println("kmsession=" + kmsession_);
         
@@ -145,9 +148,9 @@ public class BrowserView
         new String[]
         {
            "Custom-header: this is just a demo: " + url,
-           "User-Agent: BRUCE Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/61.0.3163.91 Safari/537.36",
-           "x-symphony-csrf-token: 31a95220a6b7ab18ae7201879f93e31e9f686f8f78be71424ef93eee184e53b568fd232846b960acb15d9a616aed06a6168f749ab07187becc73ce1cfff3f266",
-           "Origin: https://localhost.symphony.com:8443"
+           "User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/61.0.3163.91 Safari/537.36",
+//           "x-symphony-csrf-token: 31a95220a6b7ab18ae7201879f93e31e9f686f8f78be71424ef93eee184e53b568fd232846b960acb15d9a616aed06a6168f749ab07187becc73ce1cfff3f266",
+           "Origin: https://qa6.symphony.com"
        // "User-agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_6) AppleWebKit/604.1.38 (KHTML, like Gecko) Version/11.0 Safari/604.1.38"
         };
 //    new String[] {"User-Agent: SWT Browser","Custom-header: this is just a demo"};
