@@ -49,12 +49,13 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.symphonyoss.symphony.jcurl.JCurl;
 import org.symphonyoss.symphony.tools.rest.model.IModelListener;
+import org.symphonyoss.symphony.tools.rest.model.IModelObject;
+import org.symphonyoss.symphony.tools.rest.model.IPodManager;
 import org.symphonyoss.symphony.tools.rest.model.IUrlEndpoint;
-import org.symphonyoss.symphony.tools.rest.model.IVirtualModelObject;
 import org.symphonyoss.symphony.tools.rest.ui.ModelObjectContentProvider;
-import org.symphonyoss.symphony.tools.rest.ui.ModelObjectTypeImageAndLabelProvider;
 import org.symphonyoss.symphony.tools.rest.ui.ModelObjectLabelProvider;
 import org.symphonyoss.symphony.tools.rest.ui.ModelObjectStatusImageAndLabelProvider;
+import org.symphonyoss.symphony.tools.rest.ui.ModelObjectTypeImageAndLabelProvider;
 import org.symphonyoss.symphony.tools.rest.ui.browser.IBrowserManager;
 import org.symphonyoss.symphony.tools.rest.util.home.ISrtHome;
 
@@ -90,8 +91,8 @@ public class PodsView extends ModelObjectView
     typeColumn.getColumn().setText("Type");
     typeColumn.getColumn().setWidth(100);
     typeColumn.setLabelProvider(
-            new ModelObjectLabelProvider<IVirtualModelObject>(display,
-                IVirtualModelObject.class,
+            new ModelObjectLabelProvider<IModelObject>(display,
+                IModelObject.class,
                 (o) -> o.getTypeName()));
     
     TreeViewerColumn statusColumn = new TreeViewerColumn(viewer, SWT.NONE);
@@ -104,8 +105,8 @@ public class PodsView extends ModelObjectView
     statusMessageColumn.getColumn().setText("Status Message");
     statusMessageColumn.getColumn().setWidth(200);
     statusMessageColumn.setLabelProvider(
-            new ModelObjectLabelProvider<IVirtualModelObject>(display,
-                IVirtualModelObject.class,
+            new ModelObjectLabelProvider<IModelObject>(display,
+                IModelObject.class,
                 (o) -> o.getComponentStatusMessage()));
     
     TreeViewerColumn urlColumn = new TreeViewerColumn(viewer, SWT.NONE);
@@ -322,29 +323,31 @@ public class PodsView extends ModelObjectView
       }
     });
     
-    viewer.setInput(srtHome_);
+    viewer.setInput(srtHome_.getPodManager());
     ColumnViewerToolTipSupport.enableFor(viewer);
     
-    srtHome_.addListener(new IModelListener()
+    IPodManager podManager = srtHome_.getPodManager();
+    
+    podManager.addListener(new IModelListener()
     {
       
       @Override
-      public void modelObjectChanged(IVirtualModelObject modelObject)
+      public void modelObjectChanged(IModelObject modelObject)
       {
         display.asyncExec(() -> viewer.update(modelObject, null));
       }
-      
-      @Override
-      public void modelChanged()
-      {
-        display.asyncExec(() -> viewer.refresh());
-      }
 
       @Override
-      public void modelObjectStructureChanged(IVirtualModelObject modelObject)
+      public void modelObjectStructureChanged(IModelObject modelObject)
       {
-        display.asyncExec(() -> viewer.refresh(modelObject));
+        if(modelObject == podManager)
+          display.asyncExec(() -> viewer.refresh());
+        else
+          display.asyncExec(() -> viewer.refresh(modelObject));
       }
     });
+    
+    podManager.loadAll();
   }
+  
 }

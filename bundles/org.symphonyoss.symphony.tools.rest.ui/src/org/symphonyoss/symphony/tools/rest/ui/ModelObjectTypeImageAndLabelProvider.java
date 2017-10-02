@@ -23,55 +23,44 @@
 
 package org.symphonyoss.symphony.tools.rest.ui;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.eclipse.jface.resource.JFaceResources;
 import org.eclipse.jface.resource.LocalResourceManager;
 import org.eclipse.jface.resource.ResourceManager;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Display;
-import org.symphonyoss.symphony.tools.rest.model.AgentConfig;
-import org.symphonyoss.symphony.tools.rest.model.IVirtualModelObject;
-import org.symphonyoss.symphony.tools.rest.model.Pod;
-import org.symphonyoss.symphony.tools.rest.model.PodConfig;
-import org.symphonyoss.symphony.tools.rest.model.PrincipalConfig;
+import org.symphonyoss.symphony.tools.rest.model.IModelObject;
 import org.symphonyoss.symphony.tools.rest.ui.pods.ModelObjectView;
 
-public class ModelObjectTypeImageAndLabelProvider extends ModelObjectLabelProvider<IVirtualModelObject>
+public class ModelObjectTypeImageAndLabelProvider extends ModelObjectLabelProvider<IModelObject>
 {
   private final ResourceManager resourceManager = new LocalResourceManager(JFaceResources.getResources());
+  private final Map<String, Image> imageMap_ = new HashMap<>();
 
-  public ModelObjectTypeImageAndLabelProvider(Display display, ILabelProvider<IVirtualModelObject> labelProvider)
+  public ModelObjectTypeImageAndLabelProvider(Display display, ILabelProvider<IModelObject> labelProvider)
   {
-    super(display, IVirtualModelObject.class, labelProvider);
+    super(display, IModelObject.class, labelProvider);
   }
   
   @Override
   public Image getImage(Object element)
   {
-    if(element instanceof IVirtualModelObject)
+    if(element instanceof IModelObject)
     {
-      switch(((IVirtualModelObject)element).getTypeName())
+//      return resourceManager.createImage(ModelObjectView.IMAGE_SYMPHONY);
+
+      String typeName = ((IModelObject)element).getTypeName();
+      Image image = imageMap_.get(typeName);
+      
+      if(image == null)
       {
-        case PodConfig.TYPE_NAME:
-          return resourceManager.createImage(ModelObjectView.IMAGE_SYMPHONY);
-          
-        case PodConfig.WEB_TYPE_NAME:
-          return resourceManager.createImage(ModelObjectView.IMAGE_WEB);
-          
-        case Pod.TYPE_KEY_MANAGER:
-          return resourceManager.createImage(ModelObjectView.IMAGE_KEY_MANAGER);
-          
-        case Pod.TYPE_SESSION_AUTH:
-          return resourceManager.createImage(ModelObjectView.IMAGE_SESSION_AUTH);
-          
-        case Pod.TYPE_KEY_AUTH:
-          return resourceManager.createImage(ModelObjectView.IMAGE_KEY_AUTH);
-          
-        case AgentConfig.TYPE_NAME:
-          return resourceManager.createImage(ModelObjectView.IMAGE_AGENT);
-          
-        case PrincipalConfig.TYPE_NAME:
-          return resourceManager.createImage(ModelObjectView.IMAGE_PRINCIPAL);
+        image = resourceManager.createImage(ModelObjectView.getObjectImageDescriptor(typeName));
+        imageMap_.put(typeName, image);
       }
+      
+      return image;
     }
   
     return null;

@@ -23,38 +23,46 @@
 
 package org.symphonyoss.symphony.tools.rest.ui;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.eclipse.jface.resource.JFaceResources;
 import org.eclipse.jface.resource.LocalResourceManager;
 import org.eclipse.jface.resource.ResourceManager;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Display;
-import org.symphonyoss.symphony.tools.rest.model.IVirtualModelObject;
+import org.symphonyoss.symphony.tools.rest.model.IModelObject;
+import org.symphonyoss.symphony.tools.rest.model.osmosis.ComponentStatus;
 import org.symphonyoss.symphony.tools.rest.ui.pods.ModelObjectView;
 
-public class ModelObjectStatusImageAndLabelProvider extends ModelObjectLabelProvider<IVirtualModelObject>
+public class ModelObjectStatusImageAndLabelProvider extends ModelObjectLabelProvider<IModelObject>
 {
-  private final ResourceManager resourceManager = new LocalResourceManager(JFaceResources.getResources());
+  private final ResourceManager                     resourceManager    = new LocalResourceManager(
+      JFaceResources.getResources());
+  private final Map<ComponentStatus, Image>         statusImageMap_    = new HashMap<>();
 
   public ModelObjectStatusImageAndLabelProvider(Display display)
   {
-    super(display, IVirtualModelObject.class,
-        (o) -> null //o.getComponentStatus()
+    super(display, IModelObject.class,
+        (o) -> o.getComponentStatus()
         );
+    
+    for(ComponentStatus status : ComponentStatus.values())
+    {
+      statusImageMap_.put(status, 
+          resourceManager.createImage(ModelObjectView.getObjectImageDescriptor("status/" + status.toString())));
+    }
   }
   
   @Override
   public Image getImage(Object element)
   {
-    if(element instanceof IVirtualModelObject)
+    if(element instanceof IModelObject)
     {
-      Boolean status = ((IVirtualModelObject)element).getComponentStatus();
+      ComponentStatus status = ((IModelObject)element).getComponentStatus();
       
-      if(status == null)
-        return resourceManager.createImage(ModelObjectView.IMAGE_STATUS_INITIALIZING);
-      else if(status)
-        return resourceManager.createImage(ModelObjectView.IMAGE_STATUS_OK);
-      else
-        return resourceManager.createImage(ModelObjectView.IMAGE_STATUS_FAILED);
+      if(status != null)
+        return statusImageMap_.get(status);
     }
   
     return null;

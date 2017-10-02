@@ -38,7 +38,7 @@ public class HealthCheckHandler extends ConsoleSelectionHandler<IPod>
   
   public HealthCheckHandler()
   {
-    super("Health Check", IPod.class, "Pod");
+    super("Health Check", IPod.class, "Pod", true);
   }
 
   @Override

@@ -25,7 +25,7 @@ package org.symphonyoss.symphony.tools.rest.ui;
 
 import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.symphonyoss.symphony.tools.rest.model.IModelObject;
-import org.symphonyoss.symphony.tools.rest.model.IModelObjectProvider;
+import org.symphonyoss.symphony.tools.rest.model.IModelObjectContainer;
 
 public class ModelObjectContentProvider implements ITreeContentProvider
 {
@@ -33,19 +33,19 @@ public class ModelObjectContentProvider implements ITreeContentProvider
   @Override
   public Object[] getElements(Object inputElement)
   {
-    if(inputElement instanceof IModelObjectProvider)
-      return ((IModelObjectProvider)inputElement).getElements();
+    if(inputElement instanceof IModelObjectContainer)
+      return ((IModelObjectContainer)inputElement).getChildren();
     
-    return null;
+    return new Object[0];
   }
 
   @Override
   public Object[] getChildren(Object parentElement)
   {
-    if(parentElement instanceof IModelObject)
-      return ((IModelObject)parentElement).getChildren();
+    if(parentElement instanceof IModelObjectContainer)
+      return ((IModelObjectContainer)parentElement).getChildren();
     
-    return null;
+    return new Object[0];
   }
 
   @Override
@@ -60,8 +60,8 @@ public class ModelObjectContentProvider implements ITreeContentProvider
   @Override
   public boolean hasChildren(Object element)
   {
-    if(element instanceof IModelObject)
-      return ((IModelObject)element).hasChildren();
+    if(element instanceof IModelObjectContainer)
+      return ((IModelObjectContainer)element).hasChildren();
     
     return false;
   }

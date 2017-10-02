@@ -23,6 +23,7 @@
 
 package org.symphonyoss.symphony.tools.rest.ui.login;
 
+import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 
@@ -44,7 +45,8 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 import org.symphonyoss.symphony.tools.rest.Srt;
 import org.symphonyoss.symphony.tools.rest.model.IPod;
-import org.symphonyoss.symphony.tools.rest.model.PrincipalConfigBuilder;
+import org.symphonyoss.symphony.tools.rest.model.Principal;
+import org.symphonyoss.symphony.tools.rest.ui.ExceptionDialog;
 import org.symphonyoss.symphony.tools.rest.util.Console;
 
 public class PodLoginDialog extends Dialog
@@ -56,7 +58,7 @@ public class PodLoginDialog extends Dialog
   private boolean       running_ = true;
   private String        skey_;
   private String        kmsession_;
-  private String        podUrl_;
+  private URL        podUrl_;
   private String        kmUrl_;
   private Label         skeyWidget_;
   private Label         kmsessionWidget_;
@@ -68,22 +70,13 @@ public class PodLoginDialog extends Dialog
     console_ = console;
     html_ = html;
     
-    kmUrl_ = podUrl_ = pod_.getPodConfig().getPodUrl();
+    podUrl_ = pod_.getPodUrl();
+    kmUrl_ = podUrl_.toString();
     
-    try
-    {
-      URL kmUrl = new URL(pod_.getPodConfig().getKeyManagerUrl());
-      
-      kmUrl_ = kmUrl.getProtocol() + "://" + kmUrl.getHost();
-    }
-    catch (MalformedURLException e)
-    {
-      MessageDialog.openError(shell,
-          "Invalid Key Manager URL",
-          "Key manager URL \"" + pod_.getPodConfig().getKeyManagerUrl() + "\" is invalid\n\n" +
-              e
-          );
-    }
+    URL kmUrl = pod_.getKeyManagerUrl();
+    
+    kmUrl_ = kmUrl.getProtocol() + "://" + kmUrl.getHost();
+
   }
 
   @Override
@@ -148,7 +141,7 @@ public class PodLoginDialog extends Dialog
 
         if(event.location.contains("file://"))
         {
-          String newLocation = event.location.replaceAll("file://", podUrl_);
+          String newLocation = event.location.replaceAll("file://", podUrl_.toString());
         
           System.err.println("I changed it to " + newLocation);
           
@@ -176,7 +169,7 @@ public class PodLoginDialog extends Dialog
       @Override
       public void run()
       {
-        skey_ = Browser.getCookie(Srt.SKEY, podUrl_);
+        skey_ = Browser.getCookie(Srt.SKEY, podUrl_.toString());
         kmsession_ = Browser.getCookie(Srt.KMSESSION, kmUrl_);
         System.err.println("time skey=" + skey_);
         System.err.println("time kmSession_=" + kmsession_);
@@ -217,7 +210,23 @@ public class PodLoginDialog extends Dialog
   {
     running_ = false;
     if(skey_ != null || kmsession_ != null)
-      pod_.addPrincipal(console_, skey_, kmsession_);
+    {
+      try
+      {
+        Principal.newInstance(console_, pod_, skey_, kmsession_);
+      }
+      catch (IOException e)
+      {
+        getShell().getDisplay().asyncExec(() ->
+        {
+          ExceptionDialog.openError(getShell(),
+            "Failed to update Pod config",
+            "Update of Pod " + pod_.getName() + " failed",
+            e
+            );
+        });
+      }
+    }
     
     super.cancelPressed();
   }

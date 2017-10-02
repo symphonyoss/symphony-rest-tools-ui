@@ -30,6 +30,7 @@
     <trimBars xmi:id="_zwCjkJwDEeeESYhIiBZbsg" elementId="org.symphonyoss.symphony.tools.rest.ui.trimbar.top">
       <children xsi:type="menu:ToolBar" xmi:id="_51OZIJwDEeeESYhIiBZbsg" elementId="org.symphonyoss.symphony.tools.rest.ui.toolbar.0">
         <children xsi:type="menu:HandledToolItem" xmi:id="_6zkQsJwDEeeESYhIiBZbsg" elementId="org.symphonyoss.symphony.tools.rest.ui.handledtoolitem.probe" label="Probe" iconURI="platform:/plugin/org.symphonyoss.symphony.tools.rest.ui/icons/etool16/search.gif" command="_4qDnYJsPEee42oFXabHtOg"/>
+        <children xsi:type="menu:HandledToolItem" xmi:id="_ssKgYKSDEeeAALx_MVasiQ" elementId="org.symphonyoss.symphony.tools.rest.ui.handledtoolitem.0" iconURI="platform:/plugin/org.symphonyoss.symphony.tools.rest.ui/icons/obj16/Component.gif"/>
       </children>
     </trimBars>
   </children>

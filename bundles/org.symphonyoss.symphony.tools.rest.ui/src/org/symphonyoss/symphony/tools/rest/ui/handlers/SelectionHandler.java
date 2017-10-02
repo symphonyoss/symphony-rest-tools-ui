@@ -23,35 +23,30 @@
 
 package org.symphonyoss.symphony.tools.rest.ui.handlers;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.inject.Named;
 
 import org.eclipse.core.runtime.ICoreRunnable;
-import org.eclipse.core.runtime.IStatus;
-import org.eclipse.core.runtime.MultiStatus;
-import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.e4.core.di.annotations.Execute;
 import org.eclipse.e4.core.di.annotations.Optional;
 import org.eclipse.e4.ui.services.IServiceConstants;
-import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.widgets.Shell;
-import org.symphonyoss.symphony.tools.rest.ui.RestUI;
+import org.symphonyoss.symphony.tools.rest.ui.ExceptionDialog;
 
 public abstract class SelectionHandler<T>
 {
   private final String   commandName_;
   private final Class<T> type_;
   private final String   typeName_;
+  private boolean selectionRequired_;
 
-  public SelectionHandler(String commandName, Class<T> type, String typeName)
+  public SelectionHandler(String commandName, Class<T> type, String typeName, boolean selectionRequired)
   {
     commandName_ = commandName;
     type_ = type;
     typeName_ = typeName;
+    selectionRequired_ = selectionRequired;
   }
   
   public String getCommandName()
@@ -73,25 +68,33 @@ public abstract class SelectionHandler<T>
   public void doExecute(Shell shell, @Named(IServiceConstants.ACTIVE_SELECTION)
   @Optional Object selection)
   {
+    @SuppressWarnings("unchecked")
+    T typedSelection = (selection!=null && type_.isInstance(selection)) ? (T) selection : null;
     
-    if (selection!=null && type_.isInstance(selection))
+    if(selectionRequired_ && typedSelection == null)
     {
-      @SuppressWarnings("unchecked")
+      MessageDialog.openError(shell,
+          "No Selection",
+          "Select a " + typeName_ + " to use this command."
+          );
+    }
+    else
+    {
       Job job = Job.create(commandName_ + " Task", (ICoreRunnable) monitor ->
       {
         try
         {
-          execute(shell, (T) selection);
+          execute(shell, typedSelection);
         }
         catch (RuntimeException e)
         {
           shell.getDisplay().asyncExec(() ->
           {
-            ErrorDialog.openError(shell,
+            ExceptionDialog.openError(shell,
               "Command Failed",
               "Command " + commandName_ + " failed on\n" +
               selection,
-              createMultiStatus(e.getLocalizedMessage(), e)
+              e
               );
           });
         }
@@ -99,29 +102,6 @@ public abstract class SelectionHandler<T>
       
       job.schedule();
     }
-    else
-    {
-      MessageDialog.openError(shell,
-          "No Selection",
-          "Select a " + typeName_ + " to use this command."
-          );
-    }
-  }
-  
-  private static MultiStatus createMultiStatus(String msg, Throwable t)
-  {
-    List<Status> childStatuses = new ArrayList<>();
-    StackTraceElement[] stackTraces = t.getStackTrace();
-
-    for (StackTraceElement stackTrace : stackTraces)
-    {
-      Status status = new Status(IStatus.ERROR, RestUI.PLUGIN_ID, stackTrace.toString());
-      childStatuses.add(status);
-    }
-
-    MultiStatus ms = new MultiStatus(RestUI.PLUGIN_ID, IStatus.ERROR, childStatuses.toArray(new Status[] {}),
-        t.toString(), t);
-    return ms;
   }
 
   protected abstract void execute(Shell shell, T selection);

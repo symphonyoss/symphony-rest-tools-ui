@@ -35,7 +35,6 @@ import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.widgets.Shell;
 import org.symphonyoss.symphony.jcurl.JCurl;
 import org.symphonyoss.symphony.tools.rest.model.IPod;
-import org.symphonyoss.symphony.tools.rest.ui.browser.IBrowserManager;
 import org.symphonyoss.symphony.tools.rest.ui.login.PodLoginDialog;
 import org.symphonyoss.symphony.tools.rest.util.Console;
 import org.symphonyoss.symphony.tools.rest.util.home.ISrtHome;
@@ -47,7 +46,7 @@ public class LoginHandler extends ConsoleSelectionHandler<IPod>
   
   public LoginHandler()
   {
-    super("Login", IPod.class, "Pod");
+    super("Login", IPod.class, "Pod", true);
   }
 
   @Override

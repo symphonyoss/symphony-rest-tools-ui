@@ -35,9 +35,9 @@ public abstract class ConsoleSelectionHandler<T> extends SelectionHandler<T>
   @Inject
   private IConsoleManager consoleManager_;
   
-  public ConsoleSelectionHandler(String commandName, Class<T> type, String typeName)
+  public ConsoleSelectionHandler(String commandName, Class<T> type, String typeName, boolean selectionRequired)
   {
-    super(commandName, type, typeName);
+    super(commandName, type, typeName, selectionRequired);
   }
 
   @Override
