@@ -42,16 +42,18 @@ import org.eclipse.swt.widgets.Shell;
  */
 public class ConsoleWizardDialog extends WizardDialog
 {
+  private final SwtConsole   console_;
   private int                closeCnt_;
 
   // Local copies of private fields from WizardDialog
   private ArrayList<IWizard> nestedWizards;
   private IWizard            wizard;
   
-  public ConsoleWizardDialog(Shell parentShell, IWizard newWizard)
+  public ConsoleWizardDialog(Shell parentShell, IWizard newWizard, SwtConsole console)
   {
     super(parentShell, newWizard);
     
+    console_ = console;
     wizard = newWizard;
     
     try
@@ -69,27 +71,12 @@ public class ConsoleWizardDialog extends WizardDialog
     }
   }
 
+  // Make visible.
   @Override
   public Button getButton(int id)
   {
     return super.getButton(id);
   }
-//  public Button getFinishButton(String name)
-//  {
-//    try
-//    {
-//      Field field = WizardDialog.class.getDeclaredField(name);
-//      
-//      field.setAccessible(true);
-//      
-//      return (Button) field.get(this);
-//    }
-//    catch (NoSuchFieldException | SecurityException | IllegalArgumentException | IllegalAccessException e)
-//    {
-//      e.printStackTrace();
-//      return null;
-//    }
-//  }
 
   public boolean reallyClose()
   {
@@ -104,6 +91,16 @@ public class ConsoleWizardDialog extends WizardDialog
    */
   @Override
   protected void finishPressed() {
+    // THIS IS OUR CODE
+    
+    if(console_.getObjectives().isEmpty())
+    {
+      super.finishPressed();
+      return;
+    }
+    
+    // THIS IS THE SUPERCLASS IMPL
+    
     // Wizards are added to the nested wizards list in setWizard.
     // This means that the current wizard is always the last wizard in the
     // list.

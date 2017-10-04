@@ -27,7 +27,6 @@ import java.io.BufferedReader;
 import java.io.PrintWriter;
 
 import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.swt.widgets.Shell;
 import org.symphonyoss.symphony.tools.rest.SrtCommand;
 import org.symphonyoss.symphony.tools.rest.ui.SrtImageRegistry;
@@ -55,7 +54,7 @@ public class SwtConsole extends Console
       ConsoleWizard wizard = new ConsoleWizard(shell_, SwtConsole.this, srtCommand);
       
       ConsoleWizardDialog wizardDialog = new ConsoleWizardDialog(shell_,
-          wizard);
+          wizard, this);
       
       wizard.setDialog(wizardDialog);
       wizardDialog.open();
