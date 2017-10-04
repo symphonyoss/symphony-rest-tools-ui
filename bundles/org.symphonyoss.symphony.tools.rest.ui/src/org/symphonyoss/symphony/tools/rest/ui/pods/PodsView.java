@@ -56,6 +56,7 @@ import org.symphonyoss.symphony.tools.rest.ui.ModelObjectContentProvider;
 import org.symphonyoss.symphony.tools.rest.ui.ModelObjectLabelProvider;
 import org.symphonyoss.symphony.tools.rest.ui.ModelObjectStatusImageAndLabelProvider;
 import org.symphonyoss.symphony.tools.rest.ui.ModelObjectTypeImageAndLabelProvider;
+import org.symphonyoss.symphony.tools.rest.ui.SrtImageRegistry;
 import org.symphonyoss.symphony.tools.rest.ui.browser.IBrowserManager;
 import org.symphonyoss.symphony.tools.rest.ui.selection.ISrtSelectionService;
 import org.symphonyoss.symphony.tools.rest.util.home.ISrtHome;
@@ -70,6 +71,8 @@ public class PodsView extends ModelObjectView
   private IBrowserManager browserManager_;
   @Inject
   private ISrtSelectionService  selectionService_;
+  @Inject
+  private SrtImageRegistry  imageRegistry_;
   
   @PostConstruct
   public void createControls(Composite parent, EMenuService menuService, ESelectionService eSelectionService)
@@ -88,7 +91,7 @@ public class PodsView extends ModelObjectView
     mainColumn.getColumn().setWidth(300);
     mainColumn.setLabelProvider(
             new ModelObjectTypeImageAndLabelProvider(display,
-                (o) -> o.getName()));
+                (o) -> o.getName(), imageRegistry_));
     
     TreeViewerColumn typeColumn = new TreeViewerColumn(viewer, SWT.NONE);
     typeColumn.getColumn().setText("Type");
@@ -102,7 +105,7 @@ public class PodsView extends ModelObjectView
     statusColumn.getColumn().setText("Status");
     statusColumn.getColumn().setWidth(100);
     statusColumn.setLabelProvider(
-            new ModelObjectStatusImageAndLabelProvider(display));
+            new ModelObjectStatusImageAndLabelProvider(display, imageRegistry_));
     
     TreeViewerColumn statusMessageColumn = new TreeViewerColumn(viewer, SWT.NONE);
     statusMessageColumn.getColumn().setText("Status Message");

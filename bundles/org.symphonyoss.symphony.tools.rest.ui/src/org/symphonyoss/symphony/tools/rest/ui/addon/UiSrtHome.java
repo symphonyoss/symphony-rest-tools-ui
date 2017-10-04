@@ -43,6 +43,6 @@ public class UiSrtHome extends SrtHome
   {
     IConsole iConsole = consoleManager.createConsole();
     
-    return new SwtConsole(iConsole.getIn(), iConsole.getOut(), iConsole.getErr());
+    return new SwtConsole(null, null, iConsole.getIn(), iConsole.getOut(), iConsole.getErr());
   }
 }

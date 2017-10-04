@@ -33,6 +33,7 @@ import org.eclipse.e4.ui.di.UISynchronize;
 import org.eclipse.e4.ui.services.EMenuService;
 import org.eclipse.jface.text.DocumentEvent;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Shell;
 import org.symphonyoss.symphony.tools.rest.ui.console.IConsole;
 import org.symphonyoss.symphony.tools.rest.ui.console.IConsoleManager;
 
@@ -44,11 +45,11 @@ public class ConsoleManager implements IConsoleManager
   private UISynchronize   sync_;
   
   private Set<IConsole>    consoles_ = new HashSet<>();
-  private Set<ConsoleView> views_    = new HashSet<>();  
-
+  private Set<ConsoleView> views_    = new HashSet<>();
+  
   public ConsoleManager()
   {
-    System.err.println("ConsoleManager created");
+        System.err.println("ConsoleManager created");
   }
   
   @Override

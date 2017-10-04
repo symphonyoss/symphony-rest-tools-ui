@@ -23,25 +23,18 @@
 
 package org.symphonyoss.symphony.tools.rest.ui;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import org.eclipse.jface.resource.JFaceResources;
-import org.eclipse.jface.resource.LocalResourceManager;
-import org.eclipse.jface.resource.ResourceManager;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Display;
 import org.symphonyoss.symphony.tools.rest.model.IModelObject;
-import org.symphonyoss.symphony.tools.rest.ui.pods.ModelObjectView;
 
 public class ModelObjectTypeImageAndLabelProvider extends ModelObjectLabelProvider<IModelObject>
 {
-  private final ResourceManager resourceManager = new LocalResourceManager(JFaceResources.getResources());
-  private final Map<String, Image> imageMap_ = new HashMap<>();
+  private SrtImageRegistry  imageRegistry_;
 
-  public ModelObjectTypeImageAndLabelProvider(Display display, ILabelProvider<IModelObject> labelProvider)
+  public ModelObjectTypeImageAndLabelProvider(Display display, ILabelProvider<IModelObject> labelProvider, SrtImageRegistry imageRegistry)
   {
     super(display, IModelObject.class, labelProvider);
+    imageRegistry_ = imageRegistry;
   }
   
   @Override
@@ -49,16 +42,8 @@ public class ModelObjectTypeImageAndLabelProvider extends ModelObjectLabelProvid
   {
     if(element instanceof IModelObject)
     {
-//      return resourceManager.createImage(ModelObjectView.IMAGE_SYMPHONY);
-
       String typeName = ((IModelObject)element).getTypeName();
-      Image image = imageMap_.get(typeName);
-      
-      if(image == null)
-      {
-        image = resourceManager.createImage(ModelObjectView.getObjectImageDescriptor(typeName));
-        imageMap_.put(typeName, image);
-      }
+      Image image = imageRegistry_.getObject(typeName);
       
       return image;
     }

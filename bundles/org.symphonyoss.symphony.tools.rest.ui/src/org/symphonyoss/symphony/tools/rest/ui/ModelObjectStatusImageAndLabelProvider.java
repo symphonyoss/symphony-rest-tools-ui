@@ -23,35 +23,21 @@
 
 package org.symphonyoss.symphony.tools.rest.ui;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import org.eclipse.jface.resource.JFaceResources;
-import org.eclipse.jface.resource.LocalResourceManager;
-import org.eclipse.jface.resource.ResourceManager;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Display;
 import org.symphonyoss.symphony.tools.rest.model.IModelObject;
 import org.symphonyoss.symphony.tools.rest.model.osmosis.ComponentStatus;
-import org.symphonyoss.symphony.tools.rest.ui.pods.ModelObjectView;
 
 public class ModelObjectStatusImageAndLabelProvider extends ModelObjectLabelProvider<IModelObject>
 {
-  private final ResourceManager                     resourceManager    = new LocalResourceManager(
-      JFaceResources.getResources());
-  private final Map<ComponentStatus, Image>         statusImageMap_    = new HashMap<>();
-
-  public ModelObjectStatusImageAndLabelProvider(Display display)
+  private SrtImageRegistry  imageRegistry_;
+  
+  public ModelObjectStatusImageAndLabelProvider(Display display, SrtImageRegistry imageRegistry)
   {
     super(display, IModelObject.class,
         (o) -> o.getComponentStatus()
         );
-    
-    for(ComponentStatus status : ComponentStatus.values())
-    {
-      statusImageMap_.put(status, 
-          resourceManager.createImage(ModelObjectView.getObjectImageDescriptor("status/" + status.toString())));
-    }
+    imageRegistry_ = imageRegistry;
   }
   
   @Override
@@ -62,7 +48,7 @@ public class ModelObjectStatusImageAndLabelProvider extends ModelObjectLabelProv
       ComponentStatus status = ((IModelObject)element).getComponentStatus();
       
       if(status != null)
-        return statusImageMap_.get(status);
+        return imageRegistry_.get(status);
     }
   
     return null;

@@ -31,6 +31,7 @@ import org.eclipse.e4.core.di.annotations.Execute;
 import org.eclipse.swt.widgets.Shell;
 import org.symphonyoss.symphony.tools.rest.SrtCommand;
 import org.symphonyoss.symphony.tools.rest.ui.ExceptionDialog;
+import org.symphonyoss.symphony.tools.rest.ui.SrtImageRegistry;
 import org.symphonyoss.symphony.tools.rest.ui.console.IConsole;
 import org.symphonyoss.symphony.tools.rest.ui.console.IConsoleManager;
 import org.symphonyoss.symphony.tools.rest.ui.selection.ISrtSelectionService;
@@ -48,12 +49,15 @@ public abstract class SrtCommandHandler
   
   @Inject
   private ISrtHome        srtHome_;
+  
+  @Inject
+  private SrtImageRegistry  imageRegistry_;
 
   @Execute
   public void execute(Shell shell)
   {
     final IConsole console = consoleManager_.createConsole();
-    final Console srtConsole = new SwtConsole(console.getIn(), console.getOut(), console.getErr());
+    final Console srtConsole = new SwtConsole(shell, imageRegistry_, console.getIn(), console.getOut(), console.getErr());
     
     srtConsole.setDefaultsProvider(srtHome_);
     

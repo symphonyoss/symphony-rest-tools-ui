@@ -26,6 +26,7 @@ package org.symphonyoss.symphony.tools.rest.ui.handlers;
 import javax.inject.Inject;
 
 import org.eclipse.swt.widgets.Shell;
+import org.symphonyoss.symphony.tools.rest.ui.SrtImageRegistry;
 import org.symphonyoss.symphony.tools.rest.ui.console.IConsole;
 import org.symphonyoss.symphony.tools.rest.ui.console.IConsoleManager;
 import org.symphonyoss.symphony.tools.rest.ui.util.SwtConsole;
@@ -40,6 +41,9 @@ public abstract class ConsoleSelectionHandler<T> extends SelectionHandler<T>
   @Inject
   private ISrtHome  srtHome_;
   
+  @Inject
+  private SrtImageRegistry  imageRegistry_;
+  
   public ConsoleSelectionHandler(String commandName, Class<T> type, String typeName, boolean selectionRequired)
   {
     super(commandName, type, typeName, selectionRequired);
@@ -49,7 +53,7 @@ public abstract class ConsoleSelectionHandler<T> extends SelectionHandler<T>
   protected void execute(Shell shell, T selection)
   {
     final IConsole console = consoleManager_.createConsole();
-    final Console srtConsole = new SwtConsole(console.getIn(), console.getOut(), console.getErr());
+    final Console srtConsole = new SwtConsole(shell, imageRegistry_, console.getIn(), console.getOut(), console.getErr());
     
     srtConsole.setDefaultsProvider(srtHome_);
     

@@ -26,22 +26,86 @@ package org.symphonyoss.symphony.tools.rest.ui.util;
 import java.io.BufferedReader;
 import java.io.PrintWriter;
 
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.jface.wizard.WizardDialog;
+import org.eclipse.swt.widgets.Shell;
+import org.symphonyoss.symphony.tools.rest.SrtCommand;
+import org.symphonyoss.symphony.tools.rest.ui.SrtImageRegistry;
 import org.symphonyoss.symphony.tools.rest.util.Console;
-import org.symphonyoss.symphony.tools.rest.util.home.SrtCommandLineHome;
 
 public class SwtConsole extends Console
 {
 
-  public SwtConsole(BufferedReader in, PrintWriter out, PrintWriter err)
+  private Shell shell_;
+  private IProgressMonitor monitor_;
+  private SrtImageRegistry imageRegistry_;
+
+  public SwtConsole(Shell shell, SrtImageRegistry imageRegistry, BufferedReader in, PrintWriter out, PrintWriter err)
   {
     super(in, out, err);
+    shell_ = shell;
+    imageRegistry_ = imageRegistry;
   }
 
   @Override
-  public boolean setParameters(SrtCommandLineHome parser, int interactiveCount)
+  public void execute(SrtCommand srtCommand)
   {
-    // TODO Auto-generated method stub
-    return super.setParameters(parser, interactiveCount);
+    shell_.getDisplay().syncExec(() ->
+    {
+      ConsoleWizard wizard = new ConsoleWizard(shell_, SwtConsole.this, srtCommand);
+      
+      ConsoleWizardDialog wizardDialog = new ConsoleWizardDialog(shell_,
+          wizard);
+      
+      wizard.setDialog(wizardDialog);
+      wizardDialog.open();
+    });
+  }
+
+  public void setProgressMonitor(IProgressMonitor monitor)
+  {
+    monitor_ = monitor;
+  }
+
+  @Override
+  public void beginTask(String name, int totalWork)
+  {
+    monitor_.beginTask(name, totalWork);
+  }
+
+  @Override
+  public void done()
+  {
+    monitor_.done();
+  }
+
+  @Override
+  public boolean isCanceled()
+  {
+    return monitor_.isCanceled();
+  }
+
+  @Override
+  public void setTaskName(String name)
+  {
+    monitor_.setTaskName(name);
+  }
+
+  @Override
+  public void subTask(String name)
+  {
+    monitor_.subTask(name);
+  }
+
+  @Override
+  public void worked(int work)
+  {
+    monitor_.worked(work);
+  }
+
+  public SrtImageRegistry getImageRegistry()
+  {
+    return imageRegistry_;
   }
 
 }
