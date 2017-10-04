@@ -98,12 +98,6 @@ public class ConsoleWizardDialog extends WizardDialog
     else
       return false;
   }
-
-  @Override
-  public boolean close()
-  {
-    return false;
-  }
   
   /*
    * An almost copy of the WIzardDIalog method of the same name with the hardClose() removed.

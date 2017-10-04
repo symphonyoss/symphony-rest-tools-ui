@@ -23,27 +23,16 @@
 
 package org.symphonyoss.symphony.tools.rest.ui.handlers;
 
-import javax.inject.Inject;
-
-import org.eclipse.swt.widgets.Shell;
-import org.symphonyoss.symphony.tools.rest.model.IPod;
+import org.symphonyoss.symphony.tools.rest.SrtCommand;
 import org.symphonyoss.symphony.tools.rest.probe.CheckPod;
 import org.symphonyoss.symphony.tools.rest.util.Console;
 import org.symphonyoss.symphony.tools.rest.util.home.ISrtHome;
 
-public class HealthCheckHandler extends ConsoleSelectionHandler<IPod>
+public class HealthCheckHandler extends SrtCommandHandler
 {
-  @Inject
-  private ISrtHome        srtHome_;
-  
-  public HealthCheckHandler()
-  {
-    super("Health Check", IPod.class, "Pod", true);
-  }
-
   @Override
-  protected void execute(Shell shell, IPod pod, Console srtConsole)
+  protected SrtCommand createCommand(Console console, ISrtHome srtHome)
   {
-    new CheckPod(srtConsole, srtHome_).run();
+    return new CheckPod(console, srtHome);
   }
 }
