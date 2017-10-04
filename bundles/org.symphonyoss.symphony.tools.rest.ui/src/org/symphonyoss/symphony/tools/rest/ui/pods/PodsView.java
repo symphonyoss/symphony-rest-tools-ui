@@ -57,6 +57,7 @@ import org.symphonyoss.symphony.tools.rest.ui.ModelObjectLabelProvider;
 import org.symphonyoss.symphony.tools.rest.ui.ModelObjectStatusImageAndLabelProvider;
 import org.symphonyoss.symphony.tools.rest.ui.ModelObjectTypeImageAndLabelProvider;
 import org.symphonyoss.symphony.tools.rest.ui.browser.IBrowserManager;
+import org.symphonyoss.symphony.tools.rest.ui.selection.ISrtSelectionService;
 import org.symphonyoss.symphony.tools.rest.util.home.ISrtHome;
 
 public class PodsView extends ModelObjectView
@@ -67,9 +68,11 @@ public class PodsView extends ModelObjectView
   private ISrtHome        srtHome_;
   @Inject
   private IBrowserManager browserManager_;
+  @Inject
+  private ISrtSelectionService  selectionService_;
   
   @PostConstruct
-  public void createControls(Composite parent, EMenuService menuService, ESelectionService selectionService)
+  public void createControls(Composite parent, EMenuService menuService, ESelectionService eSelectionService)
   {
     // more code...
     TreeViewer viewer = new TreeViewer(parent, SWT.MULTI);
@@ -319,7 +322,9 @@ public class PodsView extends ModelObjectView
       public void selectionChanged(SelectionChangedEvent event)
       {
         IStructuredSelection selection = viewer.getStructuredSelection();
-        selectionService.setSelection(selection.getFirstElement());
+        eSelectionService.setSelection(selection.getFirstElement());
+        
+        selectionService_.setSelection(selection.getFirstElement());
       }
     });
     

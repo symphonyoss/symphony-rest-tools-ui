@@ -23,28 +23,16 @@
 
 package org.symphonyoss.symphony.tools.rest.ui.handlers;
 
-import javax.inject.Inject;
-
-import org.eclipse.swt.widgets.Shell;
-import org.symphonyoss.symphony.tools.rest.model.IPod;
+import org.symphonyoss.symphony.tools.rest.SrtCommand;
 import org.symphonyoss.symphony.tools.rest.probe.ProbePod;
 import org.symphonyoss.symphony.tools.rest.util.Console;
 import org.symphonyoss.symphony.tools.rest.util.home.ISrtHome;
 
-public class ProbePodHandler extends ConsoleSelectionHandler<IPod>
+public class ProbePodHandler extends SrtCommandHandler
 {
-  @Inject
-  private ISrtHome        srtHome_;
-  
-  public ProbePodHandler()
-  {
-    super("Probe Pod", IPod.class, "Pod", false);
-  }
-
   @Override
-  protected void execute(Shell shell, IPod pod, Console srtConsole)
+  protected SrtCommand createCommand(Console console, ISrtHome srtHome)
   {
-    new ProbePod(srtConsole,
-            pod == null ? null : pod.getName(), srtHome_).run();
+    return new ProbePod(console, srtHome);
   }
 }

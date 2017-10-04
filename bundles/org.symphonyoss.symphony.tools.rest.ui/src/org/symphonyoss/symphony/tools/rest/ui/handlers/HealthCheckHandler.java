@@ -44,7 +44,6 @@ public class HealthCheckHandler extends ConsoleSelectionHandler<IPod>
   @Override
   protected void execute(Shell shell, IPod pod, Console srtConsole)
   {
-    new CheckPod(srtConsole,
-            pod.getName(), srtHome_).run();
+    new CheckPod(srtConsole, srtHome_).run();
   }
 }

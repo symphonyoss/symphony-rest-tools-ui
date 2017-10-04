@@ -25,53 +25,71 @@ package org.symphonyoss.symphony.tools.rest.ui.handlers;
 
 import javax.inject.Inject;
 
+import org.eclipse.core.runtime.ICoreRunnable;
+import org.eclipse.core.runtime.jobs.Job;
+import org.eclipse.e4.core.di.annotations.Execute;
 import org.eclipse.swt.widgets.Shell;
+import org.symphonyoss.symphony.tools.rest.SrtCommand;
+import org.symphonyoss.symphony.tools.rest.ui.ExceptionDialog;
 import org.symphonyoss.symphony.tools.rest.ui.console.IConsole;
 import org.symphonyoss.symphony.tools.rest.ui.console.IConsoleManager;
+import org.symphonyoss.symphony.tools.rest.ui.selection.ISrtSelectionService;
 import org.symphonyoss.symphony.tools.rest.ui.util.SwtConsole;
 import org.symphonyoss.symphony.tools.rest.util.Console;
 import org.symphonyoss.symphony.tools.rest.util.home.ISrtHome;
 
-public abstract class ConsoleSelectionHandler<T> extends SelectionHandler<T>
+public abstract class SrtCommandHandler
 {
   @Inject
   private IConsoleManager consoleManager_;
   
   @Inject
-  private ISrtHome  srtHome_;
+  private ISrtSelectionService  selectionService_;
   
-  public ConsoleSelectionHandler(String commandName, Class<T> type, String typeName, boolean selectionRequired)
-  {
-    super(commandName, type, typeName, selectionRequired);
-  }
+  @Inject
+  private ISrtHome        srtHome_;
 
-  @Override
-  protected void execute(Shell shell, T selection)
+  @Execute
+  public void execute(Shell shell)
   {
     final IConsole console = consoleManager_.createConsole();
     final Console srtConsole = new SwtConsole(console.getIn(), console.getOut(), console.getErr());
     
     srtConsole.setDefaultsProvider(srtHome_);
     
-    srtConsole.getOut().println(getCommandName() + "(" + selection + ") starting...");
+    SrtCommand   command = createCommand(srtConsole, srtHome_);
     
-    try
+    selectionService_.populate(command.getParser());
+    
+    srtConsole.getOut().println(command.getProgramName() + " starting...");
+    
+    Job job = Job.create(command.getProgramName() + " Task", (ICoreRunnable) monitor ->
     {
-      execute(shell, selection, srtConsole);
-      
-      srtConsole.getOut().println(getCommandName() + "(" + selection + ") completed.");
-    }
-    catch (RuntimeException e)
-    {
-      srtConsole.getErr().println(getCommandName() + "(" + selection + ") FAILED");
-      e.printStackTrace(srtConsole.getErr());
-    }
-    finally
-    {
-      srtConsole.close();
-      console.close();
-    }
+      try
+      {
+        command.run();
+        srtConsole.getOut().println(command.getProgramName() + " Finished.");
+      }
+      catch (RuntimeException e)
+      {
+        shell.getDisplay().asyncExec(() ->
+        {
+          srtConsole.getOut().flush();
+          srtConsole.getErr().println(command.getProgramName() + " Failed.");
+          e.printStackTrace(srtConsole.getErr());
+          srtConsole.getErr().flush();
+          
+          ExceptionDialog.openError(shell,
+            "Command Failed",
+            "Command " + command.getProgramName() + " failed",
+            e
+            );
+        });
+      }
+    });
+    
+    job.schedule();
   }
 
-  protected abstract void execute(Shell shell, T selection, Console srtConsole);
+  protected abstract SrtCommand createCommand(Console console, ISrtHome srtHome);
 }

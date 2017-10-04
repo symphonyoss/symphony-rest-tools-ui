@@ -29,6 +29,8 @@ import org.eclipse.e4.core.contexts.ContextInjectionFactory;
 import org.eclipse.e4.core.contexts.IEclipseContext;
 import org.symphonyoss.symphony.tools.rest.ui.browser.BrowserManager;
 import org.symphonyoss.symphony.tools.rest.ui.browser.IBrowserManager;
+import org.symphonyoss.symphony.tools.rest.ui.selection.ISrtSelectionService;
+import org.symphonyoss.symphony.tools.rest.ui.selection.SrtSelectionService;
 import org.symphonyoss.symphony.tools.rest.util.home.ISrtHome;
 
 public class UiAddOn
@@ -38,5 +40,6 @@ public class UiAddOn
   {    
     context.set(ISrtHome.class, ContextInjectionFactory.make(UiSrtHome.class, context));
     context.set(IBrowserManager.class, ContextInjectionFactory.make(BrowserManager.class, context));
+    context.set(ISrtSelectionService.class, ContextInjectionFactory.make(SrtSelectionService.class, context));
   }
 }

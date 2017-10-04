@@ -21,28 +21,27 @@
  * under the License.
  */
 
-package org.symphonyoss.symphony.tools.rest.ui.addon;
+package org.symphonyoss.symphony.tools.rest.ui.util;
 
-import javax.inject.Inject;
+import java.io.BufferedReader;
+import java.io.PrintWriter;
 
-import org.symphonyoss.symphony.tools.rest.ui.console.IConsole;
-import org.symphonyoss.symphony.tools.rest.ui.console.IConsoleManager;
-import org.symphonyoss.symphony.tools.rest.ui.util.SwtConsole;
 import org.symphonyoss.symphony.tools.rest.util.Console;
-import org.symphonyoss.symphony.tools.rest.util.home.SrtHome;
+import org.symphonyoss.symphony.tools.rest.util.home.SrtCommandLineHome;
 
-public class UiSrtHome extends SrtHome
+public class SwtConsole extends Console
 {
-  @Inject
-  public UiSrtHome(IConsoleManager consoleManager)
+
+  public SwtConsole(BufferedReader in, PrintWriter out, PrintWriter err)
   {
-    super(getConsole(consoleManager));
+    super(in, out, err);
   }
 
-  private static Console getConsole(IConsoleManager consoleManager)
+  @Override
+  public boolean setParameters(SrtCommandLineHome parser, int interactiveCount)
   {
-    IConsole iConsole = consoleManager.createConsole();
-    
-    return new SwtConsole(iConsole.getIn(), iConsole.getOut(), iConsole.getErr());
+    // TODO Auto-generated method stub
+    return super.setParameters(parser, interactiveCount);
   }
+
 }

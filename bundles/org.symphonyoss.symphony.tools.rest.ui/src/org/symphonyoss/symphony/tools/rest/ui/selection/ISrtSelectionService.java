@@ -21,28 +21,15 @@
  * under the License.
  */
 
-package org.symphonyoss.symphony.tools.rest.ui.addon;
+package org.symphonyoss.symphony.tools.rest.ui.selection;
 
-import javax.inject.Inject;
+import org.symphonyoss.symphony.tools.rest.model.IModelObject;
+import org.symphonyoss.symphony.tools.rest.util.home.SrtCommandLineHome;
 
-import org.symphonyoss.symphony.tools.rest.ui.console.IConsole;
-import org.symphonyoss.symphony.tools.rest.ui.console.IConsoleManager;
-import org.symphonyoss.symphony.tools.rest.ui.util.SwtConsole;
-import org.symphonyoss.symphony.tools.rest.util.Console;
-import org.symphonyoss.symphony.tools.rest.util.home.SrtHome;
-
-public class UiSrtHome extends SrtHome
+public interface ISrtSelectionService
 {
-  @Inject
-  public UiSrtHome(IConsoleManager consoleManager)
-  {
-    super(getConsole(consoleManager));
-  }
 
-  private static Console getConsole(IConsoleManager consoleManager)
-  {
-    IConsole iConsole = consoleManager.createConsole();
-    
-    return new SwtConsole(iConsole.getIn(), iConsole.getOut(), iConsole.getErr());
-  }
+  <T extends IModelObject> void setSelection(Class<T> type, T selection);
+  void setSelection(Object selection);
+  void populate(SrtCommandLineHome parser);
 }
