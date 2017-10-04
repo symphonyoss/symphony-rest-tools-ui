@@ -27,10 +27,12 @@ import java.io.BufferedReader;
 import java.io.PrintWriter;
 
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.jface.window.Window;
 import org.eclipse.swt.widgets.Shell;
 import org.symphonyoss.symphony.tools.rest.SrtCommand;
 import org.symphonyoss.symphony.tools.rest.ui.SrtImageRegistry;
 import org.symphonyoss.symphony.tools.rest.util.Console;
+import org.symphonyoss.symphony.tools.rest.util.command.Flag;
 
 public class SwtConsole extends Console
 {
@@ -38,6 +40,7 @@ public class SwtConsole extends Console
   private Shell shell_;
   private IProgressMonitor monitor_;
   private SrtImageRegistry imageRegistry_;
+  private int ok_;
 
   public SwtConsole(Shell shell, SrtImageRegistry imageRegistry, BufferedReader in, PrintWriter out, PrintWriter err)
   {
@@ -57,8 +60,16 @@ public class SwtConsole extends Console
           wizard, this);
       
       wizard.setDialog(wizardDialog);
-      wizardDialog.open();
+      ok_ = wizardDialog.open();
     });
+    
+    if(ok_ == Window.OK)
+    {
+      for(Flag flag : srtCommand.getParser().getFlags())
+      {
+        getDefaultsProvider().setDefault(flag.getPrompt(), flag.getValue());
+      }
+    }
   }
 
   public void setProgressMonitor(IProgressMonitor monitor)
