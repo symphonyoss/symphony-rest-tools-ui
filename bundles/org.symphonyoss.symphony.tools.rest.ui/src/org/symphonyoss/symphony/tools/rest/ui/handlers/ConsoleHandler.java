@@ -24,7 +24,7 @@
 package org.symphonyoss.symphony.tools.rest.ui.handlers;
 
 import org.eclipse.swt.widgets.Shell;
-import org.symphonyoss.symphony.tools.rest.util.Console;
+import org.symphonyoss.symphony.tools.rest.console.IConsole;
 
 public abstract class ConsoleHandler extends ConsoleSelectionHandler<Void>
 {
@@ -34,10 +34,10 @@ public abstract class ConsoleHandler extends ConsoleSelectionHandler<Void>
   }
 
   @Override
-  protected void execute(Shell shell, Void selection, Console srtConsole)
+  protected void execute(Shell shell, Void selection, IConsole srtConsole)
   {
     execute(shell, srtConsole);
   }
 
-  protected abstract void execute(Shell shell, Console srtConsole);
+  protected abstract void execute(Shell shell, IConsole srtConsole);
 }

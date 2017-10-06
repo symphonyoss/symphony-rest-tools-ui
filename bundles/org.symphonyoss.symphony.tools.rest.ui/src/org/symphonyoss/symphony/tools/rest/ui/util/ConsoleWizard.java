@@ -38,6 +38,7 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Shell;
 import org.symphonyoss.symphony.tools.rest.SrtCommand;
+import org.symphonyoss.symphony.tools.rest.ui.console.SwtConsole;
 
 public class ConsoleWizard extends Wizard
 {
@@ -81,7 +82,7 @@ public class ConsoleWizard extends Wizard
         @Override
         public void run(IProgressMonitor monitor) throws InvocationTargetException, InterruptedException
         {
-          if(!console_.getObjectives().isEmpty())
+          if(console_.hasObjectives())
           {
             holdClose_ = true;
             objectivePage_.showObjetives();
@@ -91,7 +92,7 @@ public class ConsoleWizard extends Wizard
           
           command_.doExecute();
           
-          if(!console_.getObjectives().isEmpty() && wizardDialog_ != null)
+          if(console_.hasObjectives() && wizardDialog_ != null)
           {
             Button finishButton = wizardDialog_.getButton(IDialogConstants.FINISH_ID);
                 //.getFinishButton("finishButton");

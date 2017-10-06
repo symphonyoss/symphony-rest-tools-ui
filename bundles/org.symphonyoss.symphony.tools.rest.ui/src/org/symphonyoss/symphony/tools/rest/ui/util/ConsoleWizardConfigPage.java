@@ -36,6 +36,7 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
+import org.symphonyoss.symphony.tools.rest.ui.console.SwtConsole;
 import org.symphonyoss.symphony.tools.rest.util.IObjective;
 import org.symphonyoss.symphony.tools.rest.util.command.Flag;
 import org.symphonyoss.symphony.tools.rest.util.command.Switch;
@@ -84,7 +85,7 @@ public class ConsoleWizardConfigPage extends WizardPage
     objectiveContainer_ = new Composite(stackContainer_, SWT.NONE);
     layout = new GridLayout();
     objectiveContainer_.setLayout(layout);
-    layout.numColumns = 2;
+    layout.numColumns = 3;
     
     for(IObjective objective : console_.getObjectives())
     {
@@ -103,14 +104,21 @@ public class ConsoleWizardConfigPage extends WizardPage
     label.setText(objective.getLabel());
     
     final Label imageLabel = new Label(container, SWT.NONE);
-    imageLabel.setImage(console_.getImageRegistry().get(objective.getStatus()));
+    imageLabel.setImage(console_.getImageRegistry().get(objective.getComponentStatus()));
+    
+    final Label statusLabel = new Label(container, SWT.NONE);
+    statusLabel.setText(objective.getComponentStatusMessage());
     
     objective.addListener((o) ->
-      container.getDisplay().asyncExec(() -> imageLabel.setImage(console_.getImageRegistry().get(o.getStatus())))
-    );
+      container.getDisplay().asyncExec(() -> 
+      {
+        imageLabel.setImage(console_.getImageRegistry().get(o.getComponentStatus()));
+        statusLabel.setText(objective.getComponentStatusMessage());
+      }
+    ));
    
     GridData gd = new GridData(GridData.FILL_HORIZONTAL);
-    label.setLayoutData(gd);
+    statusLabel.setLayoutData(gd);
   }
 
   private void setPageComplete()

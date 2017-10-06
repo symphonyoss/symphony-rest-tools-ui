@@ -29,28 +29,22 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-import javax.inject.Inject;
-
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.widgets.Shell;
 import org.symphonyoss.symphony.jcurl.JCurl;
+import org.symphonyoss.symphony.tools.rest.console.IConsole;
 import org.symphonyoss.symphony.tools.rest.model.IPod;
 import org.symphonyoss.symphony.tools.rest.ui.login.PodLoginDialog;
-import org.symphonyoss.symphony.tools.rest.util.Console;
-import org.symphonyoss.symphony.tools.rest.util.home.ISrtHome;
 
 public class LoginHandler extends ConsoleSelectionHandler<IPod>
 {
-  @Inject
-  private ISrtHome        srtHome_;
-  
   public LoginHandler()
   {
     super("Login", IPod.class, "Pod", true);
   }
 
   @Override
-  protected void execute(Shell shell, IPod pod, Console console)
+  protected void execute(Shell shell, IPod pod, IConsole console)
   {
     URL url = pod.getUrl();
     

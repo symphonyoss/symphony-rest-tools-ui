@@ -25,10 +25,10 @@ package org.symphonyoss.symphony.tools.rest.ui.addon;
 
 import javax.inject.Inject;
 
+import org.symphonyoss.symphony.tools.rest.console.Console;
 import org.symphonyoss.symphony.tools.rest.ui.console.IConsole;
 import org.symphonyoss.symphony.tools.rest.ui.console.IConsoleManager;
-import org.symphonyoss.symphony.tools.rest.ui.util.SwtConsole;
-import org.symphonyoss.symphony.tools.rest.util.Console;
+import org.symphonyoss.symphony.tools.rest.ui.console.SwtConsole;
 import org.symphonyoss.symphony.tools.rest.util.home.SrtHome;
 
 public class UiSrtHome extends SrtHome

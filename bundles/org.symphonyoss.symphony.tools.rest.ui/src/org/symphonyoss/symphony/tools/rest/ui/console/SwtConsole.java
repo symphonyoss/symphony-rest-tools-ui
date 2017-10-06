@@ -21,7 +21,7 @@
  * under the License.
  */
 
-package org.symphonyoss.symphony.tools.rest.ui.util;
+package org.symphonyoss.symphony.tools.rest.ui.console;
 
 import java.io.BufferedReader;
 import java.io.PrintWriter;
@@ -30,8 +30,10 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.window.Window;
 import org.eclipse.swt.widgets.Shell;
 import org.symphonyoss.symphony.tools.rest.SrtCommand;
+import org.symphonyoss.symphony.tools.rest.console.Console;
 import org.symphonyoss.symphony.tools.rest.ui.SrtImageRegistry;
-import org.symphonyoss.symphony.tools.rest.util.Console;
+import org.symphonyoss.symphony.tools.rest.ui.util.ConsoleWizard;
+import org.symphonyoss.symphony.tools.rest.ui.util.ConsoleWizardDialog;
 import org.symphonyoss.symphony.tools.rest.util.command.Flag;
 
 public class SwtConsole extends Console
@@ -77,40 +79,40 @@ public class SwtConsole extends Console
     monitor_ = monitor;
   }
 
+
   @Override
-  public void beginTask(String name, int totalWork)
+  public String beginTask(int totalWork, String format, Object... args)
   {
+    String name = super.beginTask(totalWork, format, args);
     monitor_.beginTask(name, totalWork);
+    return name;
   }
 
   @Override
-  public void done()
+  public String beginSubTask(String format, Object... args)
+  {
+    String name = super.beginSubTask(format, args);
+    monitor_.subTask(name);
+    return name;
+  }
+
+  @Override
+  public void taskDone()
   {
     monitor_.done();
   }
 
   @Override
-  public boolean isCanceled()
+  public boolean isTaskCanceled()
   {
     return monitor_.isCanceled();
   }
 
   @Override
-  public void setTaskName(String name)
-  {
-    monitor_.setTaskName(name);
-  }
-
-  @Override
-  public void subTask(String name)
-  {
-    monitor_.subTask(name);
-  }
-
-  @Override
-  public void worked(int work)
+  public boolean taskWorked(int work)
   {
     monitor_.worked(work);
+    return isTaskCanceled();
   }
 
   public SrtImageRegistry getImageRegistry()

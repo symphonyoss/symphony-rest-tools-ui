@@ -44,15 +44,15 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 import org.symphonyoss.symphony.tools.rest.Srt;
+import org.symphonyoss.symphony.tools.rest.console.IConsole;
 import org.symphonyoss.symphony.tools.rest.model.IPod;
 import org.symphonyoss.symphony.tools.rest.model.Principal;
 import org.symphonyoss.symphony.tools.rest.ui.ExceptionDialog;
-import org.symphonyoss.symphony.tools.rest.util.Console;
 
 public class PodLoginDialog extends Dialog
 {
   private final IPod    pod_;
-  private final Console console_;
+  private final IConsole console_;
   private final String  html_;
 
   private boolean       running_ = true;
@@ -63,7 +63,7 @@ public class PodLoginDialog extends Dialog
   private Label         skeyWidget_;
   private Label         kmsessionWidget_;
   
-  public PodLoginDialog(Shell shell, IPod pod, Console console, String html)
+  public PodLoginDialog(Shell shell, IPod pod, IConsole console, String html)
   {
     super(shell);
     pod_ = pod;

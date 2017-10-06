@@ -30,6 +30,7 @@ import org.eclipse.jface.wizard.IWizard;
 import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Shell;
+import org.symphonyoss.symphony.tools.rest.ui.console.SwtConsole;
 
 /**
  * Sub-clss of Wizard dialog which forces the Finish button to change to Close and
@@ -93,7 +94,7 @@ public class ConsoleWizardDialog extends WizardDialog
   protected void finishPressed() {
     // THIS IS OUR CODE
     
-    if(console_.getObjectives().isEmpty())
+    if(!console_.hasObjectives())
     {
       super.finishPressed();
       return;

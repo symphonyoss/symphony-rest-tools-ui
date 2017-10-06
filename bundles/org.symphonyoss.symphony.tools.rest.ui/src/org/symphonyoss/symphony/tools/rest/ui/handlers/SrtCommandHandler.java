@@ -30,13 +30,13 @@ import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.e4.core.di.annotations.Execute;
 import org.eclipse.swt.widgets.Shell;
 import org.symphonyoss.symphony.tools.rest.SrtCommand;
+import org.symphonyoss.symphony.tools.rest.console.Console;
+import org.symphonyoss.symphony.tools.rest.console.IConsole;
 import org.symphonyoss.symphony.tools.rest.ui.ExceptionDialog;
 import org.symphonyoss.symphony.tools.rest.ui.SrtImageRegistry;
-import org.symphonyoss.symphony.tools.rest.ui.console.IConsole;
 import org.symphonyoss.symphony.tools.rest.ui.console.IConsoleManager;
+import org.symphonyoss.symphony.tools.rest.ui.console.SwtConsole;
 import org.symphonyoss.symphony.tools.rest.ui.selection.ISrtSelectionService;
-import org.symphonyoss.symphony.tools.rest.ui.util.SwtConsole;
-import org.symphonyoss.symphony.tools.rest.util.Console;
 import org.symphonyoss.symphony.tools.rest.util.home.ISrtHome;
 
 public abstract class SrtCommandHandler
@@ -56,7 +56,7 @@ public abstract class SrtCommandHandler
   @Execute
   public void execute(Shell shell)
   {
-    final IConsole console = consoleManager_.createConsole();
+    final org.symphonyoss.symphony.tools.rest.ui.console.IConsole console = consoleManager_.createConsole();
     final Console srtConsole = new SwtConsole(shell, imageRegistry_, console.getIn(), console.getOut(), console.getErr());
     
     srtConsole.setDefaultsProvider(srtHome_);
@@ -95,5 +95,5 @@ public abstract class SrtCommandHandler
     job.schedule();
   }
 
-  protected abstract SrtCommand createCommand(Console console, ISrtHome srtHome);
+  protected abstract SrtCommand createCommand(IConsole console, ISrtHome srtHome);
 }

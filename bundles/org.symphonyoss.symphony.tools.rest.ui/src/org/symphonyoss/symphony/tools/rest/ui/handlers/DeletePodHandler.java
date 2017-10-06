@@ -25,13 +25,13 @@ package org.symphonyoss.symphony.tools.rest.ui.handlers;
 
 import org.symphonyoss.symphony.tools.rest.SrtCommand;
 import org.symphonyoss.symphony.tools.rest.command.DeletePod;
-import org.symphonyoss.symphony.tools.rest.util.Console;
+import org.symphonyoss.symphony.tools.rest.console.IConsole;
 import org.symphonyoss.symphony.tools.rest.util.home.ISrtHome;
 
 public class DeletePodHandler extends SrtCommandHandler
 {
   @Override
-  protected SrtCommand createCommand(Console console, ISrtHome srtHome)
+  protected SrtCommand createCommand(IConsole console, ISrtHome srtHome)
   {
     return new DeletePod(console, srtHome);
   }

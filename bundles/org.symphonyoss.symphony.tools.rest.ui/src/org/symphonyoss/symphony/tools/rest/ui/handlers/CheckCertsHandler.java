@@ -25,14 +25,14 @@ package org.symphonyoss.symphony.tools.rest.ui.handlers;
 
 import org.symphonyoss.symphony.tools.rest.SrtCommand;
 import org.symphonyoss.symphony.tools.rest.console.IConsole;
-import org.symphonyoss.symphony.tools.rest.probe.CheckPod;
+import org.symphonyoss.symphony.tools.rest.probe.CheckCerts;
 import org.symphonyoss.symphony.tools.rest.util.home.ISrtHome;
 
-public class HealthCheckHandler extends SrtCommandHandler
+public class CheckCertsHandler extends SrtCommandHandler
 {
   @Override
   protected SrtCommand createCommand(IConsole console, ISrtHome srtHome)
   {
-    return new CheckPod(console, srtHome);
+    return new CheckCerts(console, srtHome);
   }
 }

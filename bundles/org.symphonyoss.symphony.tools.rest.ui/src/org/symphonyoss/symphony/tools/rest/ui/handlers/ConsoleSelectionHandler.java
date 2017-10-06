@@ -26,11 +26,10 @@ package org.symphonyoss.symphony.tools.rest.ui.handlers;
 import javax.inject.Inject;
 
 import org.eclipse.swt.widgets.Shell;
+import org.symphonyoss.symphony.tools.rest.console.IConsole;
 import org.symphonyoss.symphony.tools.rest.ui.SrtImageRegistry;
-import org.symphonyoss.symphony.tools.rest.ui.console.IConsole;
 import org.symphonyoss.symphony.tools.rest.ui.console.IConsoleManager;
-import org.symphonyoss.symphony.tools.rest.ui.util.SwtConsole;
-import org.symphonyoss.symphony.tools.rest.util.Console;
+import org.symphonyoss.symphony.tools.rest.ui.console.SwtConsole;
 import org.symphonyoss.symphony.tools.rest.util.home.ISrtHome;
 
 public abstract class ConsoleSelectionHandler<T> extends SelectionHandler<T>
@@ -52,23 +51,22 @@ public abstract class ConsoleSelectionHandler<T> extends SelectionHandler<T>
   @Override
   protected void execute(Shell shell, T selection)
   {
-    final IConsole console = consoleManager_.createConsole();
-    final Console srtConsole = new SwtConsole(shell, imageRegistry_, console.getIn(), console.getOut(), console.getErr());
+    final org.symphonyoss.symphony.tools.rest.ui.console.IConsole console = consoleManager_.createConsole();
+    final IConsole srtConsole = new SwtConsole(shell, imageRegistry_, console.getIn(), console.getOut(), console.getErr());
     
     srtConsole.setDefaultsProvider(srtHome_);
     
-    srtConsole.getOut().println(getCommandName() + "(" + selection + ") starting...");
+    srtConsole.printfln(getCommandName() + "(" + selection + ") starting...");
     
     try
     {
       execute(shell, selection, srtConsole);
       
-      srtConsole.getOut().println(getCommandName() + "(" + selection + ") completed.");
+      srtConsole.printfln(getCommandName() + "(" + selection + ") completed.");
     }
     catch (RuntimeException e)
     {
-      srtConsole.getErr().println(getCommandName() + "(" + selection + ") FAILED");
-      e.printStackTrace(srtConsole.getErr());
+      srtConsole.error(e, getCommandName() + "(" + selection + ") FAILED");
     }
     finally
     {
@@ -77,5 +75,5 @@ public abstract class ConsoleSelectionHandler<T> extends SelectionHandler<T>
     }
   }
 
-  protected abstract void execute(Shell shell, T selection, Console srtConsole);
+  protected abstract void execute(Shell shell, T selection, IConsole srtConsole);
 }
