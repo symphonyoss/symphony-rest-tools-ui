@@ -52,6 +52,7 @@ public class SwtConsole extends Console
   @Override
   public void execute(SrtCommand srtCommand)
   {
+    ok_ = -1;
     shell_.getDisplay().syncExec(() ->
     {
       ConsoleWizard wizard = new ConsoleWizard(shell_, SwtConsole.this, srtCommand);

@@ -8,14 +8,12 @@
             <menus xsi:type="menu:PopupMenu" xmi:id="_ccvdEJsPEee42oFXabHtOg" elementId="org.symphonyoss.symphony.tools.rest.ui.popupmenu.pods" label="Pods">
               <children xsi:type="menu:HandledMenuItem" xmi:id="_lgnRUJsPEee42oFXabHtOg" elementId="org.symphonyoss.symphony.tools.rest.ui.handledmenuitem.probe" label="Probe" iconURI="platform:/plugin/org.symphonyoss.symphony.tools.rest.ui/icons/etool16/search.gif" command="_4qDnYJsPEee42oFXabHtOg"/>
               <children xsi:type="menu:HandledMenuItem" xmi:id="_uDFSgJ5NEee_ZogvD_0JVw" elementId="org.symphonyoss.symphony.tools.rest.ui.handledmenuitem.healthCheck" label="Health Check" iconURI="platform:/plugin/org.symphonyoss.symphony.tools.rest.ui/icons/obj16/health_check.png" command="_VZS5UJ5NEee_ZogvD_0JVw"/>
-              <children xsi:type="menu:HandledMenuItem" xmi:id="_xa9TsKACEeeKSMg4A20k0A" elementId="org.symphonyoss.symphony.tools.rest.ui.handledmenuitem.login" label="Login" iconURI="platform:/plugin/org.symphonyoss.symphony.tools.rest.ui/icons/obj16/User.gif" command="_bczaUKACEeeKSMg4A20k0A"/>
+              <children xsi:type="menu:HandledMenuItem" xmi:id="_xa9TsKACEeeKSMg4A20k0A" elementId="org.symphonyoss.symphony.tools.rest.ui.handledmenuitem.login" label="Login" iconURI="platform:/plugin/org.symphonyoss.symphony.tools.rest.ui/icons/obj16/Principal.gif" command="_bczaUKACEeeKSMg4A20k0A"/>
               <children xsi:type="menu:HandledMenuItem" xmi:id="_yxHqQKlWEeeKJ5COtsrMRw" elementId="org.symphonyoss.symphony.tools.rest.ui.handledmenuitem.delete" label="Delete" iconURI="platform:/plugin/org.symphonyoss.symphony.tools.rest.ui/icons/etool16/remove.gif" command="_rJHXEKlWEeeKJ5COtsrMRw"/>
             </menus>
           </children>
         </children>
-        <children xsi:type="basic:PartStack" xmi:id="_RIgoMJrtEee42oFXabHtOg" elementId="org.symphonyoss.symphony.tools.rest.ui.partstack.work">
-          <children xsi:type="basic:Part" xmi:id="_cj9-4JrtEee42oFXabHtOg" elementId="org.symphonyoss.symphony.tools.rest.ui.part.browser" contributionURI="bundleclass://org.symphonyoss.symphony.tools.rest.ui/org.symphonyoss.symphony.tools.rest.ui.browser.BrowserView" label="Browser"/>
-        </children>
+        <children xsi:type="basic:PartStack" xmi:id="_RIgoMJrtEee42oFXabHtOg" elementId="org.symphonyoss.symphony.tools.rest.ui.partstack.work"/>
       </children>
       <children xsi:type="basic:PartStack" xmi:id="_MV9fMJrtEee42oFXabHtOg" elementId="org.symphonyoss.symphony.tools.rest.ui.partstack.console">
         <children xsi:type="basic:Part" xmi:id="_er7J4JrtEee42oFXabHtOg" elementId="org.symphonyoss.symphony.tools.rest.ui.console.part" contributionURI="bundleclass://org.symphonyoss.symphony.tools.rest.ui/org.symphonyoss.symphony.tools.rest.ui.views.ConsoleView" label="Console"/>
