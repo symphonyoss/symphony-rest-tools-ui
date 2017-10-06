@@ -98,8 +98,22 @@ public class BrowserView
       public void changing(LocationEvent event)
       {
         System.err.println("Changing location " + event.location);
+        skey_ = Browser.getCookie("skey", url_.toString());
+        kmsession_ = Browser.getCookie("kmsession", url_.toString());
+        
         System.err.println("skey=" + skey_);
         System.err.println("kmsession=" + kmsession_);
+        
+        if(event.location.contains("file://"))
+        {
+          String newLocation = event.location.replaceAll("file://", url_.toString());
+        
+          System.err.println("I changed it to " + newLocation);
+          
+          event.doit = false;
+          
+          browser.getDisplay().asyncExec(() -> browser.setUrl(newLocation));
+        }
       }
       
       @Override
@@ -124,21 +138,33 @@ public class BrowserView
     text.setFocus();
   }
 
-  public void setUrl(URL url)
+  public void setUrl(URL url, String html)
   {
     url_ = url;
-    final String[] headers = 
-//        new String[]
-//        {
-//           "User-agent: BRUCE Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.113 Safari/537.36"
-//       // "User-agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_6) AppleWebKit/604.1.38 (KHTML, like Gecko) Version/11.0 Safari/604.1.38"
-//        };
-    new String[] {"User-agent: SWT Browser","Custom-header: this is just a demo"};
+    
+    if(html == null)
+    {
+      final String[] headers = 
+        new String[]
+        {
+           "Custom-header: this is just a demo: " + url,
+           "User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/61.0.3163.91 Safari/537.36",
+//           "x-symphony-csrf-token: 31a95220a6b7ab18ae7201879f93e31e9f686f8f78be71424ef93eee184e53b568fd232846b960acb15d9a616aed06a6168f749ab07187becc73ce1cfff3f266",
+           "Origin: https://qa6.symphony.com"
+       // "User-agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_6) AppleWebKit/604.1.38 (KHTML, like Gecko) Version/11.0 Safari/604.1.38"
+        };
+//    new String[] {"User-Agent: SWT Browser","Custom-header: this is just a demo"};
     
     browser.setUrl(
-        url.toString()
+//        "http://request.urih.com/"
+        url.toString()// + "/webcontroller/ingestor/MessageService"
         //"file:///Users/bruce.skingle/eclipse/workspaces/s2/SRT_HOME/test.html"
 //        "https://perzoinc.atlassian.net/wiki/spaces/PLAT/pages/146089501/Embedded+Chat+Module+-+Internal+Showcase"
         , null, headers);
+    }
+    else
+    {
+      browser.setText(html);
+    }
   }
 }

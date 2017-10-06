@@ -74,9 +74,9 @@
 	</modules>
 	
 	<properties>
-		<tycho.version>1.0.0</tycho.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<eclipse-repo.url>http://download.eclipse.org/releases/oxygen</eclipse-repo.url>
+		<symphony.rest.tools.version>0.1.1-SNAPSHOT</symphony.rest.tools.version>
 	</properties>
 
 	<repositories>
@@ -98,10 +98,21 @@
 			</plugin>
 
 			<plugin>
+          <groupId>org.eclipse.tycho</groupId>
+          <artifactId>tycho-compiler-plugin</artifactId>
+         <version>${tycho.version}</version>
+        <configuration>
+        		<compilerArgs>
+						<compilerArg>-err:-forbidden</compilerArg>
+					</compilerArgs>
+        </configuration>
+    </plugin>
+			<plugin>
 				<groupId>org.eclipse.tycho</groupId>
 				<artifactId>target-platform-configuration</artifactId>
 				<version>${tycho.version}</version>
 				<configuration>
+					<pomDependencies>consider</pomDependencies>
 					<environments>
 						<environment>
 							<os>linux</os>
@@ -133,4 +144,22 @@
 			</plugin>
 		</plugins>
 	</build>
+	
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>${project.groupId}</groupId>
+				<artifactId>org.symphonyoss.symphony.tools.rest</artifactId>
+				<version>${symphony.rest.tools.version}</version>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+	
+
+	<dependencies>
+		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>org.symphonyoss.symphony.tools.rest</artifactId>
+		</dependency>
+	</dependencies>
 </project>

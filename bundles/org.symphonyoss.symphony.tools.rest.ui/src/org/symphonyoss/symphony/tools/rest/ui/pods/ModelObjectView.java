@@ -33,20 +33,31 @@ import org.osgi.framework.FrameworkUtil;
 
 public class ModelObjectView
 {
-  private static final String ICONS = "icons/";
-  private static final String OBJ16 = ICONS + "obj16/";
-  private static final String GIF = ".gif";
-      
-  private static final Bundle BUNDLE = FrameworkUtil.getBundle(ModelObjectView.class);
+  private static final String         ICONS                     = "icons/";
+  private static final String         OBJ16                     = ICONS + "obj16/";
+  private static final String         GIF                       = ".gif";
+
+  private static final Bundle         BUNDLE                    = FrameworkUtil.getBundle(ModelObjectView.class);
+
+  public static final ImageDescriptor IMAGE_SYMPHONY            = getObjectImageDescriptor("symphony");
+//  public static final ImageDescriptor IMAGE_WEB                 = getObjectImageDescriptor("web");
+//  public static final ImageDescriptor IMAGE_KEY_MANAGER         = getObjectImageDescriptor("key_manager");
+//  public static final ImageDescriptor IMAGE_SESSION_AUTH        = getObjectImageDescriptor("session_auth");
+//  public static final ImageDescriptor IMAGE_KEY_AUTH            = getObjectImageDescriptor("key_auth");
+//  public static final ImageDescriptor IMAGE_AGENT               = getObjectImageDescriptor("agent");
+//  public static final ImageDescriptor IMAGE_PRINCIPAL           = getObjectImageDescriptor("User");
+//
+//  public static final ImageDescriptor IMAGE_STATUS_ERROR        = getObjectImageDescriptor("status/Error");
+//  public static final ImageDescriptor IMAGE_STATUS_FAILED       = getObjectImageDescriptor("status/Failed");
+//  public static final ImageDescriptor IMAGE_STATUS_INITIALIZING = getObjectImageDescriptor("status/Initializing");
+//  public static final ImageDescriptor IMAGE_STATUS_NOT_READY    = getObjectImageDescriptor("status/NotReady");
+//  public static final ImageDescriptor IMAGE_STATUS_OK           = getObjectImageDescriptor("status/OK");
+//  public static final ImageDescriptor IMAGE_STATUS_STARTING     = getObjectImageDescriptor("status/Starting");
+//  public static final ImageDescriptor IMAGE_STATUS_STOPPED      = getObjectImageDescriptor("status/Stopped");
+//  public static final ImageDescriptor IMAGE_STATUS_STOPPING     = getObjectImageDescriptor("status/Stopping");
+//  public static final ImageDescriptor IMAGE_STATUS_WARNING      = getObjectImageDescriptor("status/Warning");
   
-  public static final ImageDescriptor IMAGE_SYMPHONY     = obj("symphony");
-  public static final ImageDescriptor IMAGE_WEB          = obj("web");
-  public static final ImageDescriptor IMAGE_KEY_MANAGER  = obj("key_manager");
-  public static final ImageDescriptor IMAGE_SESSION_AUTH = obj("session_auth");
-  public static final ImageDescriptor IMAGE_KEY_AUTH     = obj("key_auth");
-  public static final ImageDescriptor IMAGE_AGENT        = obj("agent");
-  
-  private static ImageDescriptor obj(String name)
+  public static ImageDescriptor getObjectImageDescriptor(String name)
   {
     return image(OBJ16 + name + GIF);
   }

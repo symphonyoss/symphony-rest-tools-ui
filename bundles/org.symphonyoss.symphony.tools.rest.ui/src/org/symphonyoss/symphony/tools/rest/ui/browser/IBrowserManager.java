@@ -28,6 +28,6 @@ import java.net.URL;
 public interface IBrowserManager
 {
 
-  BrowserView createBrowser(URL url);
+  BrowserView createBrowser(URL url, String html);
 
 }

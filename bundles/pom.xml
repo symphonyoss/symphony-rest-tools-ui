@@ -35,7 +35,6 @@
 	<packaging>pom</packaging>
 	
 	<modules>
-		<module>org.symphonyoss.symphony.tools.rest.ui.dependencies</module>
 		<module>org.symphonyoss.symphony.tools.rest.ui</module>
 		<module>org.symphonyoss.symphony.tools.rest.ui.console</module>
 	</modules>

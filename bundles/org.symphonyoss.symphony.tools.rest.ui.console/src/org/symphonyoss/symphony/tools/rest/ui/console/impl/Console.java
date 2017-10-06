@@ -55,7 +55,7 @@ public class Console implements IConsole
   private BufferedReader in_;
   private boolean writable_ = true;
   private ConsoleManager consoleManager_;
-  
+  private boolean open_ = true;
   
   public Console(ConsoleManager consoleManager, Logger logger, UISynchronize sync)
   {
@@ -142,12 +142,14 @@ public class Console implements IConsole
     @Override
     public void write(char[] cbuf, int off, int len) throws IOException
     {
-      sync_.syncExec(() ->
+      final String str = new StringBuilder().append(cbuf, off, len).toString();
+      
+      sync_.asyncExec(() ->
       {
         try
         {
           document_.replace(outPos_, 0,
-              new StringBuilder().append(cbuf, off, len).toString());
+              str);
           outPos_ += len;
         }
         catch (BadLocationException e)
@@ -166,7 +168,7 @@ public class Console implements IConsole
     @Override
     public void close() throws IOException
     {
-      consoleManager_.consoleClosed(Console.this);
+      Console.this.close();
     }
     
   }
@@ -174,5 +176,18 @@ public class Console implements IConsole
   public boolean isWritable()
   {
     return writable_;
+  }
+
+  @Override
+  public void close()
+  {
+    synchronized (consoleManager_)
+    {
+      if(open_)
+      {
+        consoleManager_.consoleClosed(this);
+        open_ = false;
+      }
+    }
   }
 }

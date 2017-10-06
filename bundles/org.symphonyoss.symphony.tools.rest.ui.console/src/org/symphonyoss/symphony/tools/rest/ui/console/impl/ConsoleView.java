@@ -27,6 +27,7 @@ import org.eclipse.e4.ui.services.EMenuService;
 import org.eclipse.jface.text.DocumentEvent;
 import org.eclipse.jface.text.TextViewer;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.custom.VerifyKeyListener;
 import org.eclipse.swt.events.VerifyEvent;
 import org.eclipse.swt.widgets.Composite;
@@ -69,7 +70,13 @@ public class ConsoleView
     if(autoShow_ || console_ == null)
     {
       console_ = console;
-      viewer_.setDocument(console_.getDocument());
+      
+      StyledText c = viewer_.getTextWidget();
+      
+      if(c != null)
+      {
+        c.getDisplay().asyncExec(() -> viewer_.setDocument(console_.getDocument()));
+      }
     }
   }
 

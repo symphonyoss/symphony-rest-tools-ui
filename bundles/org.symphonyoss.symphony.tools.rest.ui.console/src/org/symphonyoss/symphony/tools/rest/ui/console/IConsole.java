@@ -31,4 +31,5 @@ public interface IConsole
   PrintWriter     getOut();
   PrintWriter     getErr();
   BufferedReader  getIn();
+  void close();
 }
