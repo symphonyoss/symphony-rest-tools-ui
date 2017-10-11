@@ -76,7 +76,7 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<eclipse-repo.url>http://download.eclipse.org/releases/oxygen</eclipse-repo.url>
-		<symphony.rest.tools.version>0.1.1-SNAPSHOT</symphony.rest.tools.version>
+		<symphony.rest.tools.version>0.1.1</symphony.rest.tools.version>
 	</properties>
 
 	<repositories>
@@ -90,6 +90,13 @@
 
 	<build>
 		<plugins>
+			<plugin>
+		    <groupId>org.apache.maven.plugins</groupId>
+		    <artifactId>maven-deploy-plugin</artifactId>
+		    <configuration>
+		        <skip>true</skip>
+		    </configuration>
+		  </plugin>
 			<plugin>
 				<groupId>org.eclipse.tycho</groupId>
 				<artifactId>tycho-maven-plugin</artifactId>
