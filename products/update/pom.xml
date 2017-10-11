@@ -3,9 +3,9 @@
     <parent>
 		<groupId>org.symphonyoss.symphony.tools.rest</groupId>
 		<artifactId>products</artifactId>
-		<version>0.1.1</version>
+		<version>0.1.2-SNAPSHOT</version>
 	</parent>
     <artifactId>update</artifactId>
-    <version>0.1.1</version>
+    <version>0.1.2-SNAPSHOT</version>
     <packaging>eclipse-repository</packaging>
 </project>
