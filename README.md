@@ -1,3 +1,31 @@
+# This Repo is obsolete and will be deleted soon
+
+The Eclipse based UI for Symphony REST Tools has moved into the main repo at https://github.com/symphonyoss/symphony-rest-tools
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 # symphony-rest-tools-ui
 An Eclipse based UI for symphony-rest-tools
 
