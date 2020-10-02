@@ -1,3 +1,5 @@
+[![FINOS - Archived](https://github.com/finos/contrib-toolbox/raw/master/images/badge-archived.png)](https://finosfoundation.atlassian.net/wiki/spaces/FINOS/pages/75530367/Archived)
+
 # This Repo is obsolete and will be deleted soon
 
 The Eclipse based UI for Symphony REST Tools has moved into the main repo at https://github.com/symphonyoss/symphony-rest-tools
